@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a0f1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AsistenciaQR">
+<link rel="manifest" id="pwa-manifest">
 <title>AsistenciaQR — I.E. Nueva Esperanza</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
@@ -13,66 +19,51 @@
 body{font-family:'Segoe UI',sans-serif;background:#0a0f1e;color:#f1f5f9;min-height:100vh;font-size:15px}
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex}
-
-/* LOGIN */
-.login-bg{background:#0a0f1e;justify-content:center;align-items:center;padding:2rem;position:relative;overflow:hidden}
+.login-bg{background:#0a0f1e;justify-content:center;align-items:center;padding:2rem;position:relative;overflow:hidden;flex:1;display:flex}
 .login-bg::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 60% 40%,#0e2a4a 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,#0a2218 0%,transparent 50%);pointer-events:none}
 .login-card{background:#111827;border:1px solid #1e40af44;border-radius:20px;padding:2.5rem;width:100%;max-width:380px;position:relative;box-shadow:0 0 60px #1e40af22}
 .login-logo{text-align:center;margin-bottom:2rem}
 .login-logo .icon{font-size:3.2rem;display:block;margin-bottom:.6rem}
-.login-logo h1{font-size:1.7rem;font-weight:900;color:#38bdf8;letter-spacing:-0.5px}
+.login-logo h1{font-size:1.7rem;font-weight:900;color:#38bdf8;letter-spacing:-.5px}
 .login-logo .school{font-size:.85rem;color:#38bdf8aa;margin-top:.2rem;font-weight:600}
 .login-logo p{font-size:.8rem;color:#64748b;margin-top:.2rem}
 .f-label{display:block;font-size:.78rem;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:.4rem}
-.f-input{width:100%;background:#0a0f1e;border:2px solid #1e293b;border-radius:10px;padding:.85rem 1rem;color:#f1f5f9;font-size:.95rem;outline:none;transition:border-color .2s,box-shadow .2s}
+.f-input{width:100%;background:#0a0f1e;border:2px solid #1e293b;border-radius:10px;padding:.85rem 1rem;color:#f1f5f9;font-size:.95rem;outline:none;transition:border-color .2s}
 .f-input::placeholder{color:#334155}
 .f-input:focus{border-color:#38bdf8;box-shadow:0 0 0 3px #38bdf822}
 .f-input option{background:#0a0f1e;color:#f1f5f9}
 .f-group{margin-bottom:1.1rem}
-.btn-login{width:100%;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;border:none;border-radius:10px;padding:.9rem;font-size:1rem;font-weight:800;cursor:pointer;margin-top:.5rem;letter-spacing:.3px;transition:opacity .2s}
+.btn-login{width:100%;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;border:none;border-radius:10px;padding:.9rem;font-size:1rem;font-weight:800;cursor:pointer;margin-top:.5rem;transition:opacity .2s}
 .btn-login:hover{opacity:.9}
 .btn-login:disabled{opacity:.5;cursor:not-allowed}
 .err-msg{color:#f87171;font-size:.83rem;font-weight:600;margin-top:.6rem;display:none;text-align:center}
-.hint-creds{background:#0a0f1e;border:1px solid #1e293b;border-radius:8px;padding:.8rem;margin-top:1.1rem;font-size:.78rem;color:#64748b;text-align:center;line-height:1.8}
-.hint-creds b{color:#94a3b8}
-
-/* TOPBAR */
+.hint-lock{background:#0a0f1e;border:1px solid #1e293b;border-radius:8px;padding:.8rem;margin-top:1.1rem;font-size:.75rem;color:#334155;text-align:center;line-height:1.8}
 .topbar{background:#111827;border-bottom:2px solid #1e40af33;padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:50}
-.topbar-left .t-title{font-size:.95rem;font-weight:800;color:#38bdf8}
-.topbar-left .t-sub{font-size:.72rem;color:#64748b;margin-top:.05rem}
+.t-title{font-size:.95rem;font-weight:800;color:#38bdf8}
+.t-sub{font-size:.72rem;color:#64748b;margin-top:.05rem}
 .t-role{background:#0a0f1e;border:1px solid #1e40af55;border-radius:20px;padding:.22rem .8rem;font-size:.72rem;color:#38bdf8;font-weight:700}
 .btn-out{background:transparent;border:1px solid #374151;border-radius:6px;color:#94a3b8;padding:.35rem .8rem;font-size:.78rem;cursor:pointer;font-weight:600}
 .btn-out:hover{border-color:#ef4444;color:#ef4444}
-
-/* HOME */
 .home-wrap{flex:1;display:flex;flex-direction:column;align-items:center;padding:1.25rem;gap:1.1rem;overflow-y:auto}
 .clock-card{background:#111827;border:1px solid #1e293b;border-radius:16px;padding:1.1rem 1.5rem;width:100%;max-width:480px;text-align:center}
-.clock-card .c-time{font-size:2.4rem;font-weight:900;color:#38bdf8;letter-spacing:3px;font-variant-numeric:tabular-nums}
-.clock-card .c-date{font-size:.82rem;color:#64748b;margin-top:.2rem;text-transform:capitalize}
+.c-time{font-size:2.4rem;font-weight:900;color:#38bdf8;letter-spacing:3px;font-variant-numeric:tabular-nums}
+.c-date{font-size:.82rem;color:#64748b;margin-top:.2rem;text-transform:capitalize}
 .sec-label{font-size:.72rem;color:#475569;text-transform:uppercase;letter-spacing:.8px;font-weight:700;width:100%;max-width:480px}
 .main-btns{display:flex;flex-direction:column;gap:.75rem;width:100%;max-width:480px}
 .main-btn{background:#111827;border:2px solid #1e293b;border-radius:16px;padding:1.3rem 1.25rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .2s;text-align:left;width:100%}
 .main-btn:hover{transform:translateX(4px)}
-.main-btn.green{border-color:#14532d55}
-.main-btn.green:hover{border-color:#22c55e;background:#14532d11}
-.main-btn.blue{border-color:#1e3a8a55}
-.main-btn.blue:hover{border-color:#38bdf8;background:#0c4a6e11}
-.main-btn .m-ico{font-size:2rem;flex-shrink:0}
-.main-btn .m-lbl{font-size:.95rem;font-weight:800;color:#f1f5f9}
-.main-btn .m-sub{font-size:.75rem;color:#64748b;margin-top:.15rem}
-.main-btn .m-arr{font-size:1.3rem;margin-left:auto;flex-shrink:0}
-.green .m-arr{color:#22c55e}
-.blue .m-arr{color:#38bdf8}
-
-/* DIRECTOR PANEL */
+.main-btn.green{border-color:#14532d55}.main-btn.green:hover{border-color:#22c55e;background:#14532d11}
+.main-btn.blue{border-color:#1e3a8a55}.main-btn.blue:hover{border-color:#38bdf8;background:#0c4a6e11}
+.m-ico{font-size:2rem;flex-shrink:0}.m-lbl{font-size:.95rem;font-weight:800;color:#f1f5f9}.m-sub{font-size:.75rem;color:#64748b;margin-top:.15rem}.m-arr{font-size:1.3rem;margin-left:auto;flex-shrink:0}
+.green .m-arr{color:#22c55e}.blue .m-arr{color:#38bdf8}
 .dir-box{background:#111827;border:1px solid #1e293b;border-radius:16px;padding:1rem;width:100%;max-width:480px}
 .dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-top:.65rem}
 .dir-btn{background:#0a0f1e;border:1px solid #1e293b;border-radius:10px;padding:.85rem .5rem;text-align:center;cursor:pointer;transition:all .2s}
 .dir-btn:hover{border-color:#38bdf8;background:#0c4a6e11}
-.dir-btn .d-ico{font-size:1.35rem;display:block;margin-bottom:.3rem}
-.dir-btn .d-lbl{font-size:.72rem;color:#94a3b8;font-weight:600}
-
-/* SCAN */
+.d-ico{font-size:1.35rem;display:block;margin-bottom:.3rem}.d-lbl{font-size:.72rem;color:#94a3b8;font-weight:600}
+.pwa-banner{background:#0c4a6e;border:1px solid #38bdf855;border-radius:12px;padding:.85rem 1rem;width:100%;max-width:480px;display:flex;align-items:center;gap:.75rem}
+.pb-txt{flex:1;font-size:.8rem;color:#e0f2fe}.pb-txt b{display:block;font-size:.85rem;color:#38bdf8;margin-bottom:.1rem}
+.btn-pwa{background:#38bdf8;color:#0a0f1e;border:none;border-radius:8px;padding:.5rem .9rem;font-size:.8rem;font-weight:800;cursor:pointer;white-space:nowrap}
 .scan-wrap{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.85rem;overflow-y:auto}
 .mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
 .m-tab{padding:.7rem;border-radius:10px;border:2px solid #1e293b;background:#111827;color:#64748b;font-size:.82rem;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;line-height:1.4}
@@ -84,50 +75,39 @@ body{font-family:'Segoe UI',sans-serif;background:#0a0f1e;color:#f1f5f9;min-heig
 .vid-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:168px;height:168px;border:3px solid #38bdf8;border-radius:12px;pointer-events:none}
 .cam-hint{text-align:center;color:#475569;font-size:.78rem;padding:.55rem 1rem}
 .cam-ctrls{padding:.7rem 1rem;display:flex;gap:.6rem}
-.btn-cam{flex:1;background:#22c55e;color:#fff;border:none;border-radius:8px;padding:.75rem;font-size:.88rem;font-weight:800;cursor:pointer;transition:background .2s}
+.btn-cam{flex:1;background:#22c55e;color:#fff;border:none;border-radius:8px;padding:.75rem;font-size:.88rem;font-weight:800;cursor:pointer}
 .btn-cam.stop{background:#ef4444}
 .btn-kbd{background:#111827;color:#94a3b8;border:2px solid #1e293b;border-radius:8px;padding:.75rem 1rem;font-size:.82rem;font-weight:700;cursor:pointer}
 .btn-kbd:hover{border-color:#38bdf8;color:#f1f5f9}
-
-/* RESULTADOS */
 .res-asist{background:#111827;border:2px solid #1e293b;border-radius:14px;padding:1.1rem;display:none}
 .res-asist.show{display:block}
-.res-asist.puntual{border-color:#22c55e44;box-shadow:0 0 20px #22c55e11}
-.res-asist.tarde{border-color:#ef444444;box-shadow:0 0 20px #ef444411}
-.res-datos{background:#111827;border:2px solid #38bdf844;border-radius:14px;padding:1.1rem;display:none;box-shadow:0 0 20px #38bdf811}
+.res-asist.puntual{border-color:#22c55e44}.res-asist.tarde{border-color:#ef444444}
+.res-datos{background:#111827;border:2px solid #38bdf844;border-radius:14px;padding:1.1rem;display:none}
 .res-datos.show{display:block}
 .r-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.9rem}
-.r-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:900;flex-shrink:0}
-.r-name{font-size:1rem;font-weight:800;color:#f1f5f9}
-.r-sub{font-size:.75rem;color:#64748b;margin-top:.1rem}
+.r-name{font-size:1rem;font-weight:800;color:#f1f5f9}.r-sub{font-size:.75rem;color:#64748b;margin-top:.1rem}
 .r-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.85rem}
 .r-cell{background:#0a0f1e;border-radius:8px;padding:.55rem .7rem}
-.r-cell .rc-l{font-size:.65rem;color:#475569;text-transform:uppercase;letter-spacing:.3px;font-weight:700}
-.r-cell .rc-v{font-size:.88rem;font-weight:700;color:#f1f5f9;margin-top:.12rem}
+.rc-l{font-size:.65rem;color:#475569;text-transform:uppercase;letter-spacing:.3px;font-weight:700}
+.rc-v{font-size:.88rem;font-weight:700;color:#f1f5f9;margin-top:.12rem}
 .badge-p{background:#14532d;color:#86efac;border-radius:6px;padding:.25rem .65rem;font-size:.75rem;font-weight:800}
 .badge-t{background:#7f1d1d;color:#fca5a5;border-radius:6px;padding:.25rem .65rem;font-size:.75rem;font-weight:800}
 .btn-wa{width:100%;background:#25d366;color:#fff;border:none;border-radius:8px;padding:.8rem;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem}
 .btn-wa:disabled{background:#1e293b;color:#475569;cursor:not-allowed}
-.d-row{display:flex;align-items:center;padding:.55rem 0;border-bottom:1px solid #1e293b}
+.d-row{display:flex;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid #1e293b}
 .d-row:last-child{border-bottom:none}
-.d-lbl{font-size:.72rem;color:#475569;font-weight:700;text-transform:uppercase;width:120px;flex-shrink:0}
+.d-lbl{font-size:.72rem;color:#475569;font-weight:700;text-transform:uppercase;width:120px;flex-shrink:0;padding-top:.1rem}
 .d-val{font-size:.88rem;color:#f1f5f9;font-weight:600;flex:1;word-break:break-word}
-
-/* LISTA ESTUDIANTES */
 .list-wrap{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
 .s-search{background:#111827;border:2px solid #1e293b;border-radius:10px;padding:.7rem 1rem;color:#f1f5f9;font-size:.9rem;outline:none;width:100%}
-.s-search::placeholder{color:#334155}
-.s-search:focus{border-color:#38bdf8}
-.chips{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.2rem;flex-wrap:nowrap}
+.s-search::placeholder{color:#334155}.s-search:focus{border-color:#38bdf8}
+.chips{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.2rem}
 .chip{background:#111827;border:2px solid #1e293b;border-radius:20px;padding:.3rem .85rem;font-size:.75rem;color:#64748b;cursor:pointer;white-space:nowrap;font-weight:700;flex-shrink:0}
 .chip.on{border-color:#38bdf8;color:#38bdf8;background:#0c4a6e15}
 .s-card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:.85rem 1rem;display:flex;align-items:center;gap:.8rem;cursor:pointer;transition:border-color .2s;margin-bottom:.35rem}
 .s-card:hover{border-color:#38bdf8}
-.s-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900;flex-shrink:0}
 .s-nm{font-size:.88rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .s-info{font-size:.72rem;color:#64748b;margin-top:.1rem}
-
-/* TABLA ASISTENCIAS */
 .att-wrap{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
 .att-filters{display:flex;gap:.6rem;flex-wrap:wrap}
 .att-filters input,.att-filters select{background:#111827;border:2px solid #1e293b;border-radius:8px;padding:.6rem .85rem;color:#f1f5f9;font-size:.82rem;outline:none;flex:1;min-width:130px}
@@ -141,22 +121,29 @@ table{width:100%;border-collapse:collapse;font-size:.78rem}
 th{background:#0a0f1e;color:#64748b;font-weight:700;padding:.6rem .75rem;text-align:left;white-space:nowrap;font-size:.7rem;text-transform:uppercase;letter-spacing:.3px}
 td{padding:.6rem .75rem;border-top:1px solid #1e293b;color:#cbd5e1;white-space:nowrap}
 tr:hover td{background:#0a0f1e55}
-
-/* STATS */
 .stats-wrap{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
 .stat-c{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:.9rem 1rem}
-.stat-c .sl{font-size:.68rem;color:#475569;text-transform:uppercase;letter-spacing:.3px;font-weight:700}
-.stat-c .sv{font-size:2.1rem;font-weight:900;color:#38bdf8;margin-top:.15rem;letter-spacing:-1px}
-.stat-c .ss{font-size:.72rem;color:#64748b;margin-top:.1rem}
-
-/* USUARIOS */
+.sl{font-size:.68rem;color:#475569;text-transform:uppercase;letter-spacing:.3px;font-weight:700}
+.sv{font-size:2.1rem;font-weight:900;color:#38bdf8;margin-top:.15rem;letter-spacing:-1px}
+.ss{font-size:.72rem;color:#64748b;margin-top:.1rem}
+.rep-wrap{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
+.rep-filters{display:flex;gap:.6rem;flex-wrap:wrap}
+.rep-filters input,.rep-filters select{background:#111827;border:2px solid #1e293b;border-radius:8px;padding:.6rem .85rem;color:#f1f5f9;font-size:.82rem;outline:none;flex:1;min-width:130px}
+.rep-filters input:focus,.rep-filters select:focus{border-color:#38bdf8}
+.rep-filters select option{background:#0a0f1e}
+.sem-card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:.85rem 1rem;display:flex;align-items:center;gap:.85rem;margin-bottom:.35rem}
+.sem-nm{font-size:.88rem;font-weight:700;color:#f1f5f9}.sem-info{font-size:.72rem;color:#64748b;margin-top:.1rem}
+.sem-stats{display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;margin-left:auto}
+.sem-pct{font-size:1.1rem;font-weight:900}.sem-det{font-size:.68rem;color:#64748b}
+.sem-bar{height:5px;border-radius:3px;margin-top:.3rem;width:80px;background:#1e293b;overflow:hidden}
+.sem-bar-fill{height:100%;border-radius:3px}
+.sem-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.verde{background:#22c55e}.amarillo{background:#f59e0b}.rojo{background:#ef4444}
 .users-wrap{flex:1;padding:1rem;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
 .u-card{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:.85rem 1rem;display:flex;align-items:center;gap:.8rem;margin-bottom:.35rem}
 .u-av{width:40px;height:40px;border-radius:50%;background:#0c4a6e;color:#38bdf8;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:900;flex-shrink:0}
-
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:flex-start;justify-content:center;z-index:200;padding:1rem;overflow-y:auto}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:flex-start;justify-content:center;z-index:200;padding:1rem;overflow-y:auto}
 .modal-bg.open{display:flex}
 .modal{background:#111827;border:1px solid #1e40af33;border-radius:18px;width:100%;max-width:460px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .m-head{padding:1.1rem 1.25rem .85rem;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between}
@@ -177,98 +164,57 @@ tr:hover td{background:#0a0f1e55}
 .btn-save{flex:1;background:linear-gradient(135deg,#0ea5e9,#2563eb);border:none;border-radius:8px;padding:.72rem;color:#fff;font-weight:800;cursor:pointer;font-size:.88rem}
 .btn-save:hover{opacity:.9}
 .btn-save:disabled{opacity:.4;cursor:not-allowed}
-
-/* QR */
+.foto-upload-box{border:2px dashed #334155;border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;transition:border-color .2s}
+.foto-upload-box:hover{border-color:#38bdf8}
+.foto-preview{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #38bdf8;margin:0 auto .5rem;display:block}
+.foto-placeholder{width:80px;height:80px;border-radius:50%;background:#1e293b;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto .5rem}
+.foto-hint{font-size:.75rem;color:#64748b}
 .qr-center{text-align:center;padding:.75rem}
 .qr-center #qrcode{display:inline-block;background:#fff;padding:14px;border-radius:10px}
 .qr-sub{font-family:monospace;font-size:.72rem;color:#475569;margin-top:.55rem;word-break:break-all}
-
-/* LOADER */
 .loader{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:2rem;color:#475569;font-size:.85rem}
 .spin{width:20px;height:20px;border:2px solid #1e293b;border-top-color:#38bdf8;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* TOAST */
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#111827;border:2px solid #1e293b;border-radius:10px;padding:.75rem 1.3rem;font-size:.88rem;font-weight:600;z-index:999;display:none;max-width:320px;text-align:center;pointer-events:none}
 .toast.show{display:block}
 .toast.ok{border-color:#22c55e;color:#86efac}
 .toast.err{border-color:#ef4444;color:#fca5a5}
 .toast.info{border-color:#38bdf8;color:#7dd3fc}
 .empty{text-align:center;padding:2rem;color:#334155;font-size:.85rem}
-
-/* LOADING OVERLAY */
-.loading-overlay{position:fixed;inset:0;background:#0a0f1e;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:1rem}
-.loading-overlay .lo-ico{font-size:3rem}
-.loading-overlay .lo-txt{color:#38bdf8;font-size:1rem;font-weight:700}
-.loading-overlay .lo-sub{color:#475569;font-size:.8rem}
+.lo{position:fixed;inset:0;background:#0a0f1e;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:1rem}
 </style>
 </head>
 <body>
-
-<!-- LOADING INICIAL -->
-<div class="loading-overlay" id="loading-overlay">
-  <div class="lo-ico">🏫</div>
-  <div class="lo-txt">AsistenciaQR</div>
-  <div class="lo-sub">Conectando con la base de datos...</div>
-  <div class="spin" style="width:28px;height:28px;border-width:3px"></div>
-</div>
-
+<div class="lo" id="lo"><div style="font-size:3rem">🏫</div><div style="color:#38bdf8;font-size:1rem;font-weight:700">AsistenciaQR</div><div style="color:#475569;font-size:.8rem">Conectando...</div><div class="spin" style="width:28px;height:28px;border-width:3px"></div></div>
 <div class="toast" id="toast"></div>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div class="screen" id="sc-login">
-  <div class="login-bg" style="flex:1;display:flex;align-items:center;justify-content:center;padding:2rem">
+  <div class="login-bg">
     <div class="login-card">
-      <div class="login-logo">
-        <span class="icon">🏫</span>
-        <h1>AsistenciaQR</h1>
-        <div class="school">I.E. Nueva Esperanza</div>
-        <p>Sistema de Control de Asistencia</p>
-      </div>
-      <div class="f-group"><label class="f-label">Usuario</label><input class="f-input" id="l-user" placeholder="Ingresa tu usuario" autocomplete="username"></div>
+      <div class="login-logo"><span class="icon">🏫</span><h1>AsistenciaQR</h1><div class="school">I.E. Nueva Esperanza</div><p>Sistema de Control de Asistencia</p></div>
+      <div class="f-group"><label class="f-label">Usuario</label><input class="f-input" id="l-user" placeholder="Tu usuario" autocomplete="username"></div>
       <div class="f-group"><label class="f-label">Contraseña</label><input class="f-input" type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"></div>
       <div class="err-msg" id="l-err">⚠️ Usuario o contraseña incorrectos</div>
       <button class="btn-login" id="btn-login" onclick="doLogin()">Ingresar al Sistema</button>
-      <div class="hint-creds" style="color:#334155;font-size:.72rem;border-color:#1a2035">🔒 Acceso restringido al personal autorizado<br>Contacta al director para obtener tus credenciales</div>
+      <div class="hint-lock">🔒 Acceso restringido al personal autorizado<br>Contacta al director para obtener tus credenciales</div>
     </div>
   </div>
 </div>
 
-<!-- ===== HOME ===== -->
+<!-- HOME -->
 <div class="screen" id="sc-home">
   <div class="topbar">
-    <div class="topbar-left">
-      <div class="t-title">🏫 AsistenciaQR</div>
-      <div class="t-sub" id="tb-user">—</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:.6rem">
-      <span class="t-role" id="tb-role">—</span>
-      <button class="btn-out" onclick="doLogout()">Salir</button>
-    </div>
+    <div><div class="t-title">🏫 AsistenciaQR</div><div class="t-sub" id="tb-user">—</div></div>
+    <div style="display:flex;align-items:center;gap:.6rem"><span class="t-role" id="tb-role">—</span><button class="btn-out" onclick="doLogout()">Salir</button></div>
   </div>
   <div class="home-wrap">
-    <div class="clock-card">
-      <div class="c-time" id="h-time">00:00:00</div>
-      <div class="c-date" id="h-date">—</div>
-    </div>
+    <div id="pwa-wrap"></div>
+    <div class="clock-card"><div class="c-time" id="h-time">00:00:00</div><div class="c-date" id="h-date">—</div></div>
     <span class="sec-label">Funciones principales</span>
     <div class="main-btns">
-      <button class="main-btn green" onclick="goScan('asistencia')">
-        <span class="m-ico">📷</span>
-        <div>
-          <div class="m-lbl">Registrar Asistencia</div>
-          <div class="m-sub">Escanea el QR → registra entrada + notifica apoderado WhatsApp</div>
-        </div>
-        <span class="m-arr">→</span>
-      </button>
-      <button class="main-btn blue" onclick="goScan('datos')">
-        <span class="m-ico">🔍</span>
-        <div>
-          <div class="m-lbl">Consultar Datos del Alumno</div>
-          <div class="m-sub">Escanea el QR → ver nombre, grado, aula y contacto del apoderado</div>
-        </div>
-        <span class="m-arr">→</span>
-      </button>
+      <button class="main-btn green" onclick="goScan('asistencia')"><span class="m-ico">📷</span><div><div class="m-lbl">Registrar Asistencia</div><div class="m-sub">Escanea QR → registra entrada + notifica apoderado</div></div><span class="m-arr">→</span></button>
+      <button class="main-btn blue" onclick="goScan('datos')"><span class="m-ico">🔍</span><div><div class="m-lbl">Consultar Datos del Alumno</div><div class="m-sub">Escanea QR → ver nombre, grado, aula y contacto</div></div><span class="m-arr">→</span></button>
     </div>
     <div id="dir-panel" style="display:none;width:100%;max-width:480px">
       <div class="dir-box">
@@ -277,24 +223,18 @@ tr:hover td{background:#0a0f1e55}
           <div class="dir-btn" onclick="goTo('sc-students')"><span class="d-ico">👥</span><span class="d-lbl">Estudiantes</span></div>
           <div class="dir-btn" onclick="goTo('sc-asistencias')"><span class="d-ico">📋</span><span class="d-lbl">Asistencias</span></div>
           <div class="dir-btn" onclick="goTo('sc-stats')"><span class="d-ico">📊</span><span class="d-lbl">Estadísticas</span></div>
+          <div class="dir-btn" onclick="goTo('sc-reporte')"><span class="d-ico">🚨</span><span class="d-lbl">Inasistencias</span></div>
           <div class="dir-btn" onclick="openAddStudent()"><span class="d-ico">➕</span><span class="d-lbl">Agregar Alumno</span></div>
           <div class="dir-btn" onclick="goTo('sc-users')"><span class="d-ico">👤</span><span class="d-lbl">Usuarios</span></div>
-          <div class="dir-btn" onclick="exportExcel()"><span class="d-ico">📥</span><span class="d-lbl">Exportar Excel</span></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== SCAN ===== -->
+<!-- SCAN -->
 <div class="screen" id="sc-scan">
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="t-title" id="scan-title">📷 Escanear</div>
-      <div class="t-sub" id="scan-sub">—</div>
-    </div>
-    <button class="btn-out" onclick="stopScan();goTo('sc-home')">← Volver</button>
-  </div>
+  <div class="topbar"><div><div class="t-title" id="scan-title">📷 Escanear</div><div class="t-sub" id="scan-sub">—</div></div><button class="btn-out" onclick="stopScan();goTo('sc-home')">← Volver</button></div>
   <div class="scan-wrap">
     <div class="mode-tabs">
       <div class="m-tab" id="tab-a" onclick="setScanMode('asistencia')">✅ Registrar Asistencia<br><small style="font-weight:400;opacity:.75">+ notificar WhatsApp</small></div>
@@ -303,18 +243,10 @@ tr:hover td{background:#0a0f1e55}
     <div class="cam-box">
       <div class="vid-wrap"><video id="video" autoplay playsinline></video><div class="vid-frame"></div></div>
       <div class="cam-hint" id="cam-hint">Apunta la cámara al código QR del fotochek</div>
-      <div class="cam-ctrls">
-        <button class="btn-cam" id="btn-cam" onclick="startScan()">▶ Iniciar Cámara</button>
-        <button class="btn-kbd" onclick="openManual()">⌨ Manual</button>
-      </div>
+      <div class="cam-ctrls"><button class="btn-cam" id="btn-cam" onclick="startScan()">▶ Iniciar Cámara</button><button class="btn-kbd" onclick="openManual()">⌨ Manual</button></div>
     </div>
-    <!-- Resultado asistencia -->
     <div class="res-asist" id="res-asist">
-      <div class="r-head">
-        <div class="r-av" id="ra-av"></div>
-        <div style="flex:1"><div class="r-name" id="ra-name">—</div><div class="r-sub" id="ra-sub">—</div></div>
-        <div id="ra-badge"></div>
-      </div>
+      <div class="r-head"><div id="ra-av"></div><div style="flex:1"><div class="r-name" id="ra-name">—</div><div class="r-sub" id="ra-sub">—</div></div><div id="ra-badge"></div></div>
       <div class="r-grid">
         <div class="r-cell"><div class="rc-l">Hora entrada</div><div class="rc-v" id="ra-hora">—</div></div>
         <div class="r-cell"><div class="rc-l">Fecha</div><div class="rc-v" id="ra-fecha">—</div></div>
@@ -323,12 +255,8 @@ tr:hover td{background:#0a0f1e55}
       </div>
       <button class="btn-wa" id="wa-btn" onclick="sendWA()">💬 Notificar Apoderado por WhatsApp</button>
     </div>
-    <!-- Resultado datos -->
     <div class="res-datos" id="res-datos">
-      <div style="display:flex;align-items:center;gap:.85rem;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid #1e293b">
-        <div class="r-av" id="rd-av" style="width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0"></div>
-        <div><div style="font-size:1rem;font-weight:800;color:#38bdf8" id="rd-name">—</div><div style="font-size:.75rem;color:#64748b;margin-top:.1rem" id="rd-lvl">—</div></div>
-      </div>
+      <div style="display:flex;align-items:center;gap:.85rem;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid #1e293b"><div id="rd-av"></div><div><div style="font-size:1rem;font-weight:800;color:#38bdf8" id="rd-name">—</div><div style="font-size:.75rem;color:#64748b;margin-top:.1rem" id="rd-lvl">—</div></div></div>
       <div class="d-row"><span class="d-lbl">Apellido Pat.</span><span class="d-val" id="rd-ap">—</span></div>
       <div class="d-row"><span class="d-lbl">Apellido Mat.</span><span class="d-val" id="rd-am">—</span></div>
       <div class="d-row"><span class="d-lbl">Nombres</span><span class="d-val" id="rd-nom">—</span></div>
@@ -341,12 +269,9 @@ tr:hover td{background:#0a0f1e55}
   </div>
 </div>
 
-<!-- ===== ESTUDIANTES ===== -->
+<!-- ESTUDIANTES -->
 <div class="screen" id="sc-students">
-  <div class="topbar">
-    <div class="t-title">👥 Estudiantes</div>
-    <button class="btn-out" onclick="goTo('sc-home')">← Volver</button>
-  </div>
+  <div class="topbar"><div class="t-title">👥 Estudiantes</div><button class="btn-out" onclick="goTo('sc-home')">← Volver</button></div>
   <div class="list-wrap">
     <button class="btn-save" style="width:100%;padding:.8rem;border-radius:10px;font-size:.9rem" onclick="openAddStudent()">+ Agregar Estudiante</button>
     <input class="s-search" id="s-search" placeholder="🔍 Buscar nombre, apellido o DNI..." oninput="renderStudents()">
@@ -355,52 +280,51 @@ tr:hover td{background:#0a0f1e55}
   </div>
 </div>
 
-<!-- ===== ASISTENCIAS ===== -->
+<!-- ASISTENCIAS -->
 <div class="screen" id="sc-asistencias">
-  <div class="topbar">
-    <div class="t-title">📋 Registro de Asistencia</div>
-    <button class="btn-out" onclick="goTo('sc-home')">← Volver</button>
-  </div>
+  <div class="topbar"><div class="t-title">📋 Registro de Asistencia</div><button class="btn-out" onclick="goTo('sc-home')">← Volver</button></div>
   <div class="att-wrap">
     <div class="att-filters">
       <input type="date" id="att-date" onchange="renderAtt()">
-      <select id="att-nivel" onchange="renderAtt()">
-        <option value="">Todos los niveles</option>
-        <option>Inicial</option><option>Primaria</option><option>Secundaria</option>
-      </select>
+      <select id="att-nivel" onchange="renderAtt()"><option value="">Todos los niveles</option><option>Inicial</option><option>Primaria</option><option>Secundaria</option></select>
     </div>
-    <div class="exp-row">
-      <button class="btn-exp" onclick="exportExcel()">📥 Excel</button>
-      <button class="btn-exp" onclick="exportPDF()">🖨️ PDF</button>
-    </div>
-    <div class="tbl-wrap">
-      <table><thead><tr><th>Alumno</th><th>Nivel</th><th>Aula</th><th>Hora</th><th>Estado</th></tr></thead>
-      <tbody id="att-tbody"></tbody></table>
-    </div>
+    <div class="exp-row"><button class="btn-exp" onclick="exportExcel()">📥 Excel</button><button class="btn-exp" onclick="exportPDF()">🖨️ PDF</button></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Nivel</th><th>Aula</th><th>Hora</th><th>Estado</th></tr></thead><tbody id="att-tbody"></tbody></table></div>
   </div>
 </div>
 
-<!-- ===== STATS ===== -->
+<!-- STATS -->
 <div class="screen" id="sc-stats">
-  <div class="topbar">
-    <div class="t-title">📊 Estadísticas</div>
-    <button class="btn-out" onclick="goTo('sc-home')">← Volver</button>
-  </div>
+  <div class="topbar"><div class="t-title">📊 Estadísticas</div><button class="btn-out" onclick="goTo('sc-home')">← Volver</button></div>
   <div class="stats-wrap">
     <div class="stat-grid" id="stat-grid"></div>
-    <div class="tbl-wrap">
-      <table><thead><tr><th>Alumno</th><th>Nivel</th><th>Asist.</th><th>Tard.</th></tr></thead>
-      <tbody id="stats-tbody"></tbody></table>
-    </div>
+    <div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Nivel</th><th>Asist.</th><th>Tard.</th></tr></thead><tbody id="stats-tbody"></tbody></table></div>
   </div>
 </div>
 
-<!-- ===== USUARIOS ===== -->
-<div class="screen" id="sc-users">
-  <div class="topbar">
-    <div class="t-title">👤 Usuarios del Sistema</div>
-    <button class="btn-out" onclick="goTo('sc-home')">← Volver</button>
+<!-- REPORTE INASISTENCIAS -->
+<div class="screen" id="sc-reporte">
+  <div class="topbar"><div class="t-title">🚨 Reporte de Inasistencias</div><button class="btn-out" onclick="goTo('sc-home')">← Volver</button></div>
+  <div class="rep-wrap">
+    <div class="rep-filters">
+      <input type="date" id="rep-desde">
+      <input type="date" id="rep-hasta">
+      <select id="rep-nivel"><option value="">Todos los niveles</option><option>Inicial</option><option>Primaria</option><option>Secundaria</option></select>
+    </div>
+    <button class="btn-save" style="width:100%;padding:.75rem;border-radius:10px;font-size:.88rem" onclick="renderReporte()">🔍 Generar Reporte</button>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:.75rem;color:#64748b;padding:.25rem 0">
+      <span><span class="sem-dot verde" style="display:inline-block;vertical-align:middle;margin-right:.3rem"></span>90-100% normal</span>
+      <span><span class="sem-dot amarillo" style="display:inline-block;vertical-align:middle;margin-right:.3rem"></span>75-89% en riesgo</span>
+      <span><span class="sem-dot rojo" style="display:inline-block;vertical-align:middle;margin-right:.3rem"></span>menos 75% crítico</span>
+    </div>
+    <div class="exp-row"><button class="btn-exp" onclick="exportRepExcel()">📥 Excel</button><button class="btn-exp" onclick="exportRepPDF()">🖨️ PDF</button></div>
+    <div id="rep-list"></div>
   </div>
+</div>
+
+<!-- USUARIOS -->
+<div class="screen" id="sc-users">
+  <div class="topbar"><div class="t-title">👤 Usuarios del Sistema</div><button class="btn-out" onclick="goTo('sc-home')">← Volver</button></div>
   <div class="users-wrap">
     <button class="btn-save" style="width:100%;padding:.8rem;border-radius:10px;font-size:.9rem" onclick="openAddUser()">+ Agregar Usuario</button>
     <div id="u-list"></div>
@@ -413,39 +337,25 @@ tr:hover td{background:#0a0f1e55}
     <div class="m-head"><span class="m-title" id="mod-s-title">Agregar Estudiante</span><button class="m-close" onclick="closeMod('mod-student')">×</button></div>
     <div class="m-body">
       <input type="hidden" id="ms-id">
-      <div class="f2">
-        <div class="mf"><label>Apellido Paterno</label><input id="ms-ap" placeholder="Quispe"></div>
-        <div class="mf"><label>Apellido Materno</label><input id="ms-am" placeholder="Flores"></div>
+      <div class="mf">
+        <label>Foto del alumno</label>
+        <div class="foto-upload-box" onclick="document.getElementById('ms-foto').click()">
+          <input type="file" id="ms-foto" accept="image/*" onchange="previewFoto(this)" style="display:none">
+          <div id="foto-prev"><div class="foto-placeholder">👤</div><div class="foto-hint">Toca para subir foto (opcional)</div></div>
+        </div>
       </div>
-      <div class="f2">
-        <div class="mf"><label>Nombres</label><input id="ms-nom" placeholder="Juan Carlos"></div>
-        <div class="mf"><label>DNI</label><input id="ms-dni" placeholder="12345678" maxlength="8"></div>
-      </div>
-      <div class="mf"><label>Nivel</label>
-        <select id="ms-nivel" onchange="updAulas()">
-          <option value="Inicial">Inicial</option>
-          <option value="Primaria">Primaria</option>
-          <option value="Secundaria">Secundaria</option>
-        </select>
-      </div>
-      <div class="f2" id="ms-grado-row">
-        <div class="mf"><label id="ms-grado-lbl">Grado</label><select id="ms-grado" onchange="updAulasForGrado()"></select></div>
-        <div class="mf"><label>Aula / Sección</label><select id="ms-aula"></select></div>
-      </div>
-      <div class="f2">
-        <div class="mf"><label>Nombre Apoderado</label><input id="ms-apod" placeholder="María Flores"></div>
-        <div class="mf"><label>Teléfono (con código país)</label><input id="ms-tel" placeholder="51987654321"></div>
-      </div>
+      <div class="f2"><div class="mf"><label>Apellido Paterno</label><input id="ms-ap" placeholder="Quispe"></div><div class="mf"><label>Apellido Materno</label><input id="ms-am" placeholder="Flores"></div></div>
+      <div class="f2"><div class="mf"><label>Nombres</label><input id="ms-nom" placeholder="Juan Carlos"></div><div class="mf"><label>DNI</label><input id="ms-dni" placeholder="12345678" maxlength="8"></div></div>
+      <div class="mf"><label>Nivel</label><select id="ms-nivel" onchange="updAulas()"><option value="Inicial">Inicial</option><option value="Primaria">Primaria</option><option value="Secundaria">Secundaria</option></select></div>
+      <div class="f2"><div class="mf"><label id="ms-gl">Grado</label><select id="ms-grado" onchange="updAulasForGrado()"></select></div><div class="mf"><label>Aula</label><select id="ms-aula"></select></div></div>
+      <div class="f2"><div class="mf"><label>Nombre Apoderado</label><input id="ms-apod" placeholder="María Flores"></div><div class="mf"><label>Teléfono Apoderado</label><input id="ms-tel" placeholder="51987654321"></div></div>
       <div class="mf"><label>API Key CallMeBot</label><input id="ms-api" placeholder="Lo activa el apoderado una sola vez"></div>
     </div>
-    <div class="m-foot">
-      <button class="btn-cancel" onclick="closeMod('mod-student')">Cancelar</button>
-      <button class="btn-save" id="btn-save-student" onclick="saveStudent()">Guardar</button>
-    </div>
+    <div class="m-foot"><button class="btn-cancel" onclick="closeMod('mod-student')">Cancelar</button><button class="btn-save" id="btn-ss" onclick="saveStudent()">Guardar</button></div>
   </div>
 </div>
 
-<!-- MODAL VER ESTUDIANTE -->
+<!-- MODAL VER -->
 <div class="modal-bg" id="mod-view">
   <div class="modal">
     <div class="m-head"><span class="m-title">Datos del Estudiante</span><button class="m-close" onclick="closeMod('mod-view')">×</button></div>
@@ -458,10 +368,7 @@ tr:hover td{background:#0a0f1e55}
 <div class="modal-bg" id="mod-qr">
   <div class="modal">
     <div class="m-head"><span class="m-title" id="mod-qr-title">Código QR</span><button class="m-close" onclick="closeMod('mod-qr')">×</button></div>
-    <div class="m-body">
-      <div class="qr-center"><div id="qrcode"></div><div class="qr-sub" id="qr-sub"></div></div>
-      <p style="font-size:.75rem;color:#475569;text-align:center;margin-top:.75rem">Recortar e imprimir para pegar en el fotochek del alumno</p>
-    </div>
+    <div class="m-body"><div class="qr-center"><div id="qrcode"></div><div class="qr-sub" id="qr-sub"></div></div><p style="font-size:.75rem;color:#475569;text-align:center;margin-top:.75rem">Recortar e imprimir para pegar en el fotochek</p></div>
     <div class="m-foot"><button class="btn-save" style="width:100%" onclick="printQR()">🖨️ Imprimir QR</button></div>
   </div>
 </div>
@@ -469,8 +376,8 @@ tr:hover td{background:#0a0f1e55}
 <!-- MODAL MANUAL -->
 <div class="modal-bg" id="mod-manual">
   <div class="modal">
-    <div class="m-head"><span class="m-title">Ingreso Manual de Código</span><button class="m-close" onclick="closeMod('mod-manual')">×</button></div>
-    <div class="m-body"><div class="mf"><label>Código QR del alumno</label><input id="manual-code" placeholder="Ej: QR-2024-ABC123"></div></div>
+    <div class="m-head"><span class="m-title">Ingreso Manual</span><button class="m-close" onclick="closeMod('mod-manual')">×</button></div>
+    <div class="m-body"><div class="mf"><label>Código QR del alumno</label><input id="manual-code" placeholder="QR-2024-ABC123"></div></div>
     <div class="m-foot"><button class="btn-cancel" onclick="closeMod('mod-manual')">Cancelar</button><button class="btn-save" onclick="processManual()">Procesar</button></div>
   </div>
 </div>
@@ -478,87 +385,57 @@ tr:hover td{background:#0a0f1e55}
 <!-- MODAL USUARIO -->
 <div class="modal-bg" id="mod-user">
   <div class="modal">
-    <div class="m-head"><span class="m-title">Agregar Usuario</span><button class="m-close" onclick="closeMod('mod-user')">×</button></div>
+    <div class="m-head"><span class="m-title" id="mod-u-title">Agregar Usuario</span><button class="m-close" onclick="closeMod('mod-user')">×</button></div>
     <div class="m-body">
+      <input type="hidden" id="mu-id">
       <div class="mf"><label>Nombre completo</label><input id="mu-name" placeholder="Prof. Ana García"></div>
-      <div class="f2">
-        <div class="mf"><label>Usuario</label><input id="mu-user" placeholder="tutor2"></div>
-        <div class="mf"><label>Contraseña</label><input type="password" id="mu-pass" placeholder="••••••••"></div>
-      </div>
+      <div class="f2"><div class="mf"><label>Usuario</label><input id="mu-user" placeholder="tutor2"></div><div class="mf"><label>Contraseña nueva</label><input type="password" id="mu-pass" placeholder="••••••••"></div></div>
       <div class="mf"><label>Rol</label><select id="mu-rol"><option value="tutor">Tutor / Docente</option><option value="director">Director</option></select></div>
     </div>
-    <div class="m-foot"><button class="btn-cancel" onclick="closeMod('mod-user')">Cancelar</button><button class="btn-save" id="btn-save-user" onclick="saveUser()">Crear Usuario</button></div>
+    <div class="m-foot"><button class="btn-cancel" onclick="closeMod('mod-user')">Cancelar</button><button class="btn-save" id="btn-su" onclick="saveUser()">Guardar</button></div>
   </div>
 </div>
 
 <canvas id="canvas" style="display:none"></canvas>
-
 <script>
-// =============================================
-// SUPABASE CONFIG
-// =============================================
-const SUPA_URL = 'https://vjhxnekmkpcsslahszld.supabase.co';
-const SUPA_KEY = 'sb_publishable_Oc5ggwivsZr5y4j_Unv8Yw_GTblv2s3';
-const { createClient } = supabase;
-const db = createClient(SUPA_URL, SUPA_KEY);
+const SUPA_URL='https://vjhxnekmkpcsslahszld.supabase.co';
+const SUPA_KEY='sb_publishable_Oc5ggwivsZr5y4j_Unv8Yw_GTblv2s3';
+const {createClient}=supabase;
+const db=createClient(SUPA_URL,SUPA_KEY);
 
-// Realtime channel
-let realtimeChannel = null;
-
-// =============================================
-// CONFIG
-// =============================================
-const HORA_LIMITE = {h:8, m:0};
-const COLORS = ['#3b82f6','#8b5cf6','#ec4899','#f97316','#14b8a6','#f59e0b','#22c55e','#06b6d4'];
-const ESTRUCTURA = {
-  Inicial: {
-    grados: ['3 años','4 años','5 años'],
-    aulas: {'3 años':['Única'],'4 años':['Única'],'5 años':['Única']}
-  },
-  Primaria: {
-    grados: ['1ro','2do','3ro','4to','5to','6to'],
-    aulas: {'1ro':['Única','A','B'],'2do':['Única','A','B'],'3ro':['Única','A','B'],'4to':['Única','A','B'],'5to':['Única','A','B'],'6to':['Única','A','B']}
-  },
-  Secundaria: {
-    grados: ['(sin grado)'],
-    aulas: {'(sin grado)':['Alfa','Beta','Gama','Delta']}
-  }
+const HORA_LIMITE={h:8,m:0};
+const COLORS=['#3b82f6','#8b5cf6','#ec4899','#f97316','#14b8a6','#f59e0b','#22c55e','#06b6d4'];
+const EST={
+  Inicial:{g:['3 años','4 años','5 años'],a:{'3 años':['Única'],'4 años':['Única'],'5 años':['Única']}},
+  Primaria:{g:['1ro','2do','3ro','4to','5to','6to'],a:{'1ro':['Única','A','B'],'2do':['Única','A','B'],'3ro':['Única','A','B'],'4to':['Única','A','B'],'5to':['Única','A','B'],'6to':['Única','A','B']}},
+  Secundaria:{g:['(sin grado)'],a:{'(sin grado)':['Alfa','Beta','Gama','Delta']}}
 };
 
-// Estado local
-let currentUser = null;
-let students = [];
-let attendance = [];
-let usuarios = [];
-let scanStream = null;
-let scanInterval = null;
-let lastCode = null;
-let lastCodeTime = 0;
-let scanMode = 'asistencia';
-let activeChip = 'all';
-let lastScannedStudent = null;
-let lastScannedRec = null;
+let CU=null,ST=[],AT=[],US=[];
+let scanStream=null,scanIv=null,lastCode=null,lastCodeT=0,scanMode='asistencia';
+let activeChip='all',lastS=null,lastR=null,dPWA=null;
 
-// =============================================
+// PWA
+const mf={name:'AsistenciaQR',short_name:'AsistenciaQR',start_url:'.',display:'standalone',background_color:'#0a0f1e',theme_color:'#0a0f1e',icons:[{src:'https://cdn-icons-png.flaticon.com/512/2436/2436874.png',sizes:'192x192',type:'image/png'},{src:'https://cdn-icons-png.flaticon.com/512/2436/2436874.png',sizes:'512x512',type:'image/png'}]};
+document.getElementById('pwa-manifest').href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/json'}));
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dPWA=e;showPWA();});
+function showPWA(){document.getElementById('pwa-wrap').innerHTML=`<div class="pwa-banner"><span style="font-size:1.5rem">📲</span><div class="pb-txt"><b>Instalar como App</b>Toca para agregar a pantalla de inicio</div><button class="btn-pwa" onclick="installPWA()">Instalar</button></div>`;}
+async function installPWA(){if(!dPWA)return;dPWA.prompt();const{outcome}=await dPWA.userChoice;if(outcome==='accepted'){document.getElementById('pwa-wrap').innerHTML='';toast('✅ App instalada','ok');}dPWA=null;}
+
 // HELPERS
-// =============================================
-function genId(){return 'QR-'+new Date().getFullYear()+'-'+Math.random().toString(36).substr(2,6).toUpperCase()}
-function fmtTime(d){return d.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
-function fmtDate(d){return d.toLocaleDateString('es-PE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
-function fmtDateShort(d){return d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'numeric'})}
-function todayStr(){return new Date().toISOString().split('T')[0]}
-function fullName(s){return s.apellido_paterno+' '+s.apellido_materno+', '+s.nombres}
-function initials(s){return((s.nombres||'?')[0]+((s.apellido_paterno||'?')[0])).toUpperCase()}
-function colorFor(s){let h=0;for(let c of(s.id||'x'))h=(h<<5)-h+c.charCodeAt(0);return COLORS[Math.abs(h)%COLORS.length]}
-function isLate(d){return d.getHours()>HORA_LIMITE.h||(d.getHours()===HORA_LIMITE.h&&d.getMinutes()>HORA_LIMITE.m)}
-function gradoAula(s){return s.nivel==='Secundaria'?'Aula '+s.aula:(s.grado+' — '+s.aula)}
+function genId(){return'QR-'+new Date().getFullYear()+'-'+Math.random().toString(36).substr(2,6).toUpperCase()}
+function fmtT(d){return d.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+function fmtD(d){return d.toLocaleDateString('es-PE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
+function fmtDS(d){return d.toLocaleDateString('es-PE',{day:'2-digit',month:'2-digit',year:'numeric'})}
+function today(){return new Date().toISOString().split('T')[0]}
+function fn(s){return s.apellido_paterno+' '+s.apellido_materno+', '+s.nombres}
+function ini(s){return((s.nombres||'?')[0]+((s.apellido_paterno||'?')[0])).toUpperCase()}
+function col(s){let h=0;for(let c of(s.id||'x'))h=(h<<5)-h+c.charCodeAt(0);return COLORS[Math.abs(h)%COLORS.length]}
+function late(d){return d.getHours()>HORA_LIMITE.h||(d.getHours()===HORA_LIMITE.h&&d.getMinutes()>HORA_LIMITE.m)}
+function ga(s){return s.nivel==='Secundaria'?'Aula '+s.aula:(s.grado+' — '+s.aula)}
+function av(s,sz=44){if(s.foto_url)return`<img src="${s.foto_url}" style="width:${sz}px;height:${sz}px;border-radius:50%;object-fit:cover;flex-shrink:0">`;const c=col(s);return`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${c}22;color:${c};display:flex;align-items:center;justify-content:center;font-size:${Math.round(sz*.35)}px;font-weight:900;flex-shrink:0">${ini(s)}</div>`;}
 
-function toast(msg,type='info'){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show '+type;
-  setTimeout(()=>t.classList.remove('show'),3200);
-}
-
+function toast(msg,type='info'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>t.classList.remove('show'),3200);}
 function goTo(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -566,138 +443,66 @@ function goTo(id){
   if(id==='sc-asistencias')renderAtt();
   if(id==='sc-stats')renderStats();
   if(id==='sc-users')renderUsers();
+  if(id==='sc-reporte'){const h=today();const d=new Date();d.setDate(1);document.getElementById('rep-desde').value=d.toISOString().split('T')[0];document.getElementById('rep-hasta').value=h;renderReporte();}
 }
-
 function openMod(id){document.getElementById(id).classList.add('open')}
 function closeMod(id){document.getElementById(id).classList.remove('open')}
 
-// =============================================
-// INIT — cargar datos desde Supabase
-// =============================================
+// INIT
 async function init(){
-  try {
-    const [r1,r2,r3] = await Promise.all([
-      db.from('estudiantes').select('*').eq('activo',true).order('apellido_paterno'),
-      db.from('asistencias').select('*').order('created_at',{ascending:false}),
-      db.from('usuarios').select('*').eq('activo',true)
-    ]);
-    if(r1.error)throw r1.error;
-    if(r2.error)throw r2.error;
-    if(r3.error)throw r3.error;
-    students = r1.data||[];
-    attendance = r2.data||[];
-    usuarios = r3.data||[];
-    document.getElementById('loading-overlay').style.display='none';
+  try{
+    const[r1,r2,r3]=await Promise.all([db.from('estudiantes').select('*').eq('activo',true).order('apellido_paterno'),db.from('asistencias').select('*').order('created_at',{ascending:false}),db.from('usuarios').select('*').eq('activo',true)]);
+    if(r1.error)throw r1.error;if(r2.error)throw r2.error;if(r3.error)throw r3.error;
+    ST=r1.data||[];AT=r2.data||[];US=r3.data||[];
+    document.getElementById('lo').style.display='none';
     document.getElementById('sc-login').classList.add('active');
-    setupRealtime();
-  } catch(e){
-    console.error(e);
-    document.getElementById('loading-overlay').innerHTML='<div class="lo-ico">⚠️</div><div class="lo-txt" style="color:#f87171">Error de conexión</div><div class="lo-sub">'+e.message+'</div><button onclick="init()" style="background:#38bdf8;border:none;border-radius:8px;padding:.6rem 1.5rem;color:#0a0f1e;font-weight:800;cursor:pointer;margin-top:.5rem">Reintentar</button>';
-  }
+    db.channel('ch').on('postgres_changes',{event:'INSERT',schema:'public',table:'asistencias'},p=>{AT.unshift(p.new);toast('📡 Nueva asistencia en tiempo real','info');}).on('postgres_changes',{event:'INSERT',schema:'public',table:'estudiantes'},p=>ST.push(p.new)).on('postgres_changes',{event:'UPDATE',schema:'public',table:'estudiantes'},p=>{const i=ST.findIndex(s=>s.id===p.new.id);if(i>=0)ST[i]=p.new;}).subscribe();
+  }catch(e){document.getElementById('lo').innerHTML=`<div style="font-size:3rem">⚠️</div><div style="color:#f87171;font-size:1rem;font-weight:700">Error de conexión</div><div style="color:#475569;font-size:.8rem">${e.message}</div><button onclick="init()" style="background:#38bdf8;border:none;border-radius:8px;padding:.6rem 1.5rem;color:#0a0f1e;font-weight:800;cursor:pointer;margin-top:.5rem">Reintentar</button>`;}
 }
 
-// =============================================
-// REALTIME — actualización en tiempo real
-// =============================================
-function setupRealtime(){
-  realtimeChannel = db.channel('cambios')
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'asistencias'},payload=>{
-      attendance.unshift(payload.new);
-      toast('📡 Nueva asistencia registrada en tiempo real','info');
-    })
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'estudiantes'},payload=>{
-      students.push(payload.new);
-    })
-    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'estudiantes'},payload=>{
-      const i=students.findIndex(s=>s.id===payload.new.id);
-      if(i>=0)students[i]=payload.new;
-    })
-    .subscribe();
-}
-
-// =============================================
 // LOGIN
-// =============================================
 async function doLogin(){
-  const u=document.getElementById('l-user').value.trim();
-  const p=document.getElementById('l-pass').value;
-  document.getElementById('btn-login').disabled=true;
-  document.getElementById('btn-login').textContent='Verificando...';
-  const found=usuarios.find(x=>x.usuario===u&&x.password===p);
-  if(!found){
-    document.getElementById('l-err').style.display='block';
-    document.getElementById('btn-login').disabled=false;
-    document.getElementById('btn-login').textContent='Ingresar al Sistema';
-    return;
-  }
-  document.getElementById('l-err').style.display='none';
-  currentUser=found;
+  const u=document.getElementById('l-user').value.trim(),p=document.getElementById('l-pass').value;
+  const btn=document.getElementById('btn-login');btn.disabled=true;btn.textContent='Verificando...';
+  const found=US.find(x=>x.usuario===u&&x.password===p);
+  if(!found){document.getElementById('l-err').style.display='block';btn.disabled=false;btn.textContent='Ingresar al Sistema';return;}
+  document.getElementById('l-err').style.display='none';CU=found;
   document.getElementById('tb-user').textContent=found.nombre;
   document.getElementById('tb-role').textContent=found.rol==='director'?'Director':'Tutor';
   document.getElementById('dir-panel').style.display=found.rol==='director'?'block':'none';
-  startClock();
-  document.getElementById('btn-login').disabled=false;
-  document.getElementById('btn-login').textContent='Ingresar al Sistema';
-  goTo('sc-home');
+  startClock();btn.disabled=false;btn.textContent='Ingresar al Sistema';goTo('sc-home');
 }
-function doLogout(){stopScan();currentUser=null;document.getElementById('l-user').value='';document.getElementById('l-pass').value='';goTo('sc-login')}
-document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+function doLogout(){stopScan();CU=null;document.getElementById('l-user').value='';document.getElementById('l-pass').value='';goTo('sc-login');}
+document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
-// =============================================
 // CLOCK
-// =============================================
-function startClock(){
-  updateClock();setInterval(updateClock,1000);
-}
-function updateClock(){
-  const n=new Date();
-  document.getElementById('h-time').textContent=fmtTime(n);
-  document.getElementById('h-date').textContent=fmtDate(n);
-}
+function startClock(){updateClock();setInterval(updateClock,1000);}
+function updateClock(){const n=new Date();document.getElementById('h-time').textContent=fmtT(n);document.getElementById('h-date').textContent=fmtD(n);}
 
-// =============================================
 // SCAN
-// =============================================
-function goScan(mode){
-  goTo('sc-scan');
-  setScanMode(mode);
-  document.getElementById('scan-sub').textContent=fmtDate(new Date());
-  document.getElementById('res-asist').className='res-asist';
-  document.getElementById('res-datos').className='res-datos';
-}
-
+function goScan(mode){goTo('sc-scan');setScanMode(mode);document.getElementById('scan-sub').textContent=fmtD(new Date());document.getElementById('res-asist').className='res-asist';document.getElementById('res-datos').className='res-datos';}
 function setScanMode(mode){
-  scanMode=mode;
-  lastCode=null;lastCodeTime=0;
+  scanMode=mode;lastCode=null;lastCodeT=0;
   document.getElementById('tab-a').className='m-tab '+(mode==='asistencia'?'on-asist':'');
   document.getElementById('tab-d').className='m-tab '+(mode==='datos'?'on-datos':'');
   document.getElementById('scan-title').textContent=mode==='asistencia'?'📷 Registrar Asistencia':'🔍 Consultar Datos';
-  document.getElementById('cam-hint').textContent=mode==='asistencia'
-    ?'Apunta la cámara al QR del fotochek para registrar entrada'
-    :'Apunta la cámara al QR del fotochek para ver datos del alumno';
-  document.getElementById('res-asist').className='res-asist';
-  document.getElementById('res-datos').className='res-datos';
+  document.getElementById('cam-hint').textContent=mode==='asistencia'?'Apunta la cámara al QR del fotochek para registrar entrada':'Apunta la cámara al QR del fotochek para ver datos';
+  document.getElementById('res-asist').className='res-asist';document.getElementById('res-datos').className='res-datos';
 }
-
 function startScan(){
-  if(!navigator.mediaDevices){toast('Cámara no disponible. Usa ingreso manual.','err');return;}
+  if(!navigator.mediaDevices){toast('Usa el botón Manual','err');return;}
   navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(stream=>{
-    scanStream=stream;
-    const v=document.getElementById('video');v.srcObject=stream;v.play();
-    const b=document.getElementById('btn-cam');
-    b.textContent='⏹ Detener Cámara';b.className='btn-cam stop';b.onclick=stopScan;
-    scanInterval=setInterval(scanFrame,300);
-  }).catch(()=>toast('No se pudo acceder a la cámara. Usa el botón Manual.','err'));
+    scanStream=stream;const v=document.getElementById('video');v.srcObject=stream;v.play();
+    const b=document.getElementById('btn-cam');b.textContent='⏹ Detener';b.className='btn-cam stop';b.onclick=stopScan;
+    scanIv=setInterval(scanFrame,300);
+  }).catch(()=>toast('No se pudo acceder a la cámara. Usa Manual.','err'));
 }
-
 function stopScan(){
   if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null;}
-  if(scanInterval){clearInterval(scanInterval);scanInterval=null;}
+  if(scanIv){clearInterval(scanIv);scanIv=null;}
   document.getElementById('video').srcObject=null;
-  const b=document.getElementById('btn-cam');
-  b.textContent='▶ Iniciar Cámara';b.className='btn-cam';b.onclick=startScan;
+  const b=document.getElementById('btn-cam');b.textContent='▶ Iniciar Cámara';b.className='btn-cam';b.onclick=startScan;
 }
-
 function scanFrame(){
   const v=document.getElementById('video'),c=document.getElementById('canvas');
   if(!v.videoWidth)return;
@@ -705,242 +510,162 @@ function scanFrame(){
   const ctx=c.getContext('2d');ctx.drawImage(v,0,0);
   const img=ctx.getImageData(0,0,c.width,c.height);
   const code=jsQR(img.data,img.width,img.height);
-  if(code){
-    const now=Date.now();
-    if(code.data===lastCode&&now-lastCodeTime<3000)return;
-    lastCode=code.data;lastCodeTime=now;
-    processQR(code.data);
-  }
+  if(code){const now=Date.now();if(code.data===lastCode&&now-lastCodeT<3000)return;lastCode=code.data;lastCodeT=now;processQR(code.data);}
 }
-
 async function processQR(code){
-  const s=students.find(x=>x.id===code);
+  const s=ST.find(x=>x.id===code);
   if(!s){toast('⚠️ Código QR no reconocido','err');return;}
-  if(scanMode==='asistencia')await processAsistencia(s);
-  else processDatos(s);
+  if(scanMode==='asistencia')await processAsist(s);else processDatos(s);
 }
-
-async function processAsistencia(s){
-  const now=new Date();
-  const today=todayStr();
-  const existing=attendance.find(a=>a.estudiante_id===s.id&&a.fecha===today);
-  if(existing){toast('⚠️ '+s.nombres+' ya fue registrado hoy a las '+existing.hora,'info');return;}
-  const late=isLate(now);
-  const rec={
-    estudiante_id:s.id,
-    fecha:today,
-    hora:fmtTime(now),
-    estado:late?'Tardanza':'Puntual',
-    registrado_por:currentUser.nombre
-  };
-  const {data,error}=await db.from('asistencias').insert([rec]).select().single();
-  if(error){toast('Error al guardar: '+error.message,'err');return;}
-  attendance.unshift(data);
-  lastScannedStudent=s;
-  lastScannedRec=data;
-  showResAsist(s,data,now);
-  toast('✅ Asistencia registrada — '+s.nombres,'ok');
+async function processAsist(s){
+  const now=new Date(),tod=today();
+  const ex=AT.find(a=>a.estudiante_id===s.id&&a.fecha===tod);
+  if(ex){toast('⚠️ '+s.nombres+' ya fue registrado hoy a las '+ex.hora,'info');return;}
+  const isLate=late(now);
+  const rec={estudiante_id:s.id,fecha:tod,hora:fmtT(now),estado:isLate?'Tardanza':'Puntual',registrado_por:CU.nombre};
+  const{data,error}=await db.from('asistencias').insert([rec]).select().single();
+  if(error){toast('Error: '+error.message,'err');return;}
+  AT.unshift(data);lastS=s;lastR=data;showResAsist(s,data,now);toast('✅ Asistencia registrada — '+s.nombres,'ok');
 }
-
 function showResAsist(s,rec,now){
-  const late=rec.estado==='Tardanza';
-  const col=colorFor(s);
-  const el=document.getElementById('res-asist');
-  el.className='res-asist show '+(late?'tarde':'puntual');
-  const av=document.getElementById('ra-av');
-  av.style.cssText=`background:${col}25;color:${col};width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:900;flex-shrink:0`;
-  av.textContent=initials(s);
-  document.getElementById('ra-name').textContent=fullName(s);
-  document.getElementById('ra-sub').textContent=s.nivel+' — '+gradoAula(s);
-  document.getElementById('ra-badge').innerHTML=late?'<span class="badge-t">TARDANZA</span>':'<span class="badge-p">PUNTUAL</span>';
+  const isLate=rec.estado==='Tardanza';
+  document.getElementById('res-asist').className='res-asist show '+(isLate?'tarde':'puntual');
+  document.getElementById('ra-av').innerHTML=av(s,52);
+  document.getElementById('ra-name').textContent=fn(s);
+  document.getElementById('ra-sub').textContent=s.nivel+' — '+ga(s);
+  document.getElementById('ra-badge').innerHTML=isLate?'<span class="badge-t">TARDANZA</span>':'<span class="badge-p">PUNTUAL</span>';
   document.getElementById('ra-hora').textContent=rec.hora;
-  document.getElementById('ra-fecha').textContent=fmtDateShort(now);
+  document.getElementById('ra-fecha').textContent=fmtDS(now);
   document.getElementById('ra-nivel').textContent=s.nivel;
   document.getElementById('ra-aula').textContent=s.nivel==='Secundaria'?s.aula:s.grado+' '+s.aula;
-  const wa=document.getElementById('wa-btn');
-  wa.disabled=!s.telefono||!s.apikey_callmebot;
+  document.getElementById('wa-btn').disabled=!s.telefono||!s.apikey_callmebot;
   document.getElementById('res-datos').className='res-datos';
 }
-
 function processDatos(s){
-  const col=colorFor(s);
-  const av=document.getElementById('rd-av');
-  av.style.cssText=`background:${col}25;color:${col};width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0`;
-  av.textContent=initials(s);
-  document.getElementById('rd-name').textContent=fullName(s);
-  document.getElementById('rd-lvl').textContent=s.nivel+' — '+gradoAula(s);
-  document.getElementById('rd-ap').textContent=s.apellido_paterno||'—';
-  document.getElementById('rd-am').textContent=s.apellido_materno||'—';
-  document.getElementById('rd-nom').textContent=s.nombres||'—';
-  document.getElementById('rd-dni').textContent=s.dni||'—';
+  document.getElementById('rd-av').innerHTML=av(s,54);
+  document.getElementById('rd-name').textContent=fn(s);
+  document.getElementById('rd-lvl').textContent=s.nivel+' — '+ga(s);
+  ['ap','am','nom','dni'].forEach(k=>document.getElementById('rd-'+k).textContent=s['apellido_'+(k==='ap'?'paterno':k==='am'?'materno':k)]||s[k]||'—');
   document.getElementById('rd-nivel').textContent=s.nivel||'—';
-  document.getElementById('rd-aula').textContent=gradoAula(s);
+  document.getElementById('rd-aula').textContent=ga(s);
   document.getElementById('rd-apod').textContent=s.apoderado||'—';
   document.getElementById('rd-tel').textContent=s.telefono||'—';
   document.getElementById('res-datos').className='res-datos show';
   document.getElementById('res-asist').className='res-asist';
   toast('📋 Datos cargados — '+s.nombres,'info');
 }
+function openManual(){document.getElementById('manual-code').value='';openMod('mod-manual');}
+function processManual(){const code=document.getElementById('manual-code').value.trim();if(!code){toast('Ingresa el código','err');return;}closeMod('mod-manual');processQR(code);}
 
-function openManual(){document.getElementById('manual-code').value='';openMod('mod-manual')}
-function processManual(){
-  const code=document.getElementById('manual-code').value.trim();
-  if(!code){toast('Ingresa el código','err');return;}
-  closeMod('mod-manual');processQR(code);
-}
-
-// =============================================
 // WHATSAPP
-// =============================================
 function sendWA(){
-  const s=lastScannedStudent;
-  const rec=lastScannedRec;
-  if(!s||!s.telefono||!s.apikey_callmebot){toast('Falta número o API Key del apoderado','err');return;}
-  const late=rec.estado==='Tardanza';
+  const s=lastS,rec=lastR;
+  if(!s||!s.telefono||!s.apikey_callmebot){toast('Falta número o API Key','err');return;}
+  const isLate=rec.estado==='Tardanza';
   const aula=s.nivel==='Secundaria'?'Aula '+s.aula:s.grado+' "'+s.aula+'"';
-  const msg=encodeURIComponent(
-    (late?'⚠️':'✅')+' *ASISTENCIA ESCOLAR*\n\n'+
-    'Estimado/a apoderado/a '+s.apoderado+':\n\n'+
-    'Su hijo/a *'+fullName(s)+'*\n'+
-    s.nivel+' - '+aula+'\n\n'+
-    '📅 Fecha: '+rec.fecha+'\n'+
-    '🕐 Hora de ingreso: '+rec.hora+'\n'+
-    '📌 Estado: '+(late?'⚠️ TARDANZA':'✅ PUNTUAL')+'\n\n'+
-    '_I.E. Nueva Esperanza — AsistenciaQR_'
-  );
-  const url=`https://api.callmebot.com/whatsapp.php?phone=${s.telefono}&text=${msg}&apikey=${s.apikey_callmebot}`;
-  window.open(url,'_blank');
+  const msg=encodeURIComponent((isLate?'⚠️':'✅')+' *ASISTENCIA ESCOLAR*\n\nEstimado/a apoderado/a '+s.apoderado+':\n\nSu hijo/a *'+fn(s)+'*\n'+s.nivel+' - '+aula+'\n\n📅 Fecha: '+rec.fecha+'\n🕐 Hora: '+rec.hora+'\n📌 Estado: '+(isLate?'⚠️ TARDANZA':'✅ PUNTUAL')+'\n\n_I.E. Nueva Esperanza — AsistenciaQR_');
+  window.open(`https://api.callmebot.com/whatsapp.php?phone=${s.telefono}&text=${msg}&apikey=${s.apikey_callmebot}`,'_blank');
   toast('💬 Notificación enviada a '+s.apoderado,'ok');
 }
 
-// =============================================
-// FORMULARIO ESTUDIANTE
-// =============================================
-function updAulas(){
-  const nivel=document.getElementById('ms-nivel').value;
-  const est=ESTRUCTURA[nivel];
-  const gs=document.getElementById('ms-grado');
-  const gl=document.getElementById('ms-grado-lbl');
-  if(nivel==='Secundaria'){
-    gs.style.visibility='hidden';
-    gl.textContent='(sin grado)';
-  } else {
-    gs.style.visibility='visible';
-    gl.textContent='Grado';
-  }
-  gs.innerHTML=est.grados.map(g=>`<option>${g}</option>`).join('');
-  updAulasForGrado();
+// FOTO
+function previewFoto(input){
+  if(!input.files||!input.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>document.getElementById('foto-prev').innerHTML=`<img src="${e.target.result}" class="foto-preview"><div class="foto-hint">Toca para cambiar</div>`;
+  reader.readAsDataURL(input.files[0]);
 }
-function updAulasForGrado(){
-  const nivel=document.getElementById('ms-nivel').value;
-  const grado=document.getElementById('ms-grado').value;
-  const aulas=ESTRUCTURA[nivel].aulas[grado]||ESTRUCTURA[nivel].aulas[ESTRUCTURA[nivel].grados[0]];
-  document.getElementById('ms-aula').innerHTML=aulas.map(a=>`<option>${a}</option>`).join('');
+async function uploadFoto(file,sid){
+  if(!file)return null;
+  const ext=file.name.split('.').pop();
+  const{error}=await db.storage.from('fotos-alumnos').upload(`${sid}.${ext}`,file,{upsert:true});
+  if(error){console.error(error);return null;}
+  const{data}=db.storage.from('fotos-alumnos').getPublicUrl(`${sid}.${ext}`);
+  return data.publicUrl+'?t='+Date.now();
 }
 
+// FORMULARIO ESTUDIANTE
+function updAulas(){
+  const nivel=document.getElementById('ms-nivel').value,est=EST[nivel];
+  const gs=document.getElementById('ms-grado'),gl=document.getElementById('ms-gl');
+  if(nivel==='Secundaria'){gs.style.visibility='hidden';gl.textContent='(sin grado)';}
+  else{gs.style.visibility='visible';gl.textContent='Grado';}
+  gs.innerHTML=est.g.map(g=>`<option>${g}</option>`).join('');updAulasForGrado();
+}
+function updAulasForGrado(){
+  const nivel=document.getElementById('ms-nivel').value,grado=document.getElementById('ms-grado').value;
+  const aulas=EST[nivel].a[grado]||EST[nivel].a[EST[nivel].g[0]];
+  document.getElementById('ms-aula').innerHTML=aulas.map(a=>`<option>${a}</option>`).join('');
+}
 function openAddStudent(){
   document.getElementById('mod-s-title').textContent='Agregar Estudiante';
   document.getElementById('ms-id').value='';
   ['ms-ap','ms-am','ms-nom','ms-dni','ms-apod','ms-tel','ms-api'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('ms-nivel').value='Inicial';
-  updAulas();
-  openMod('mod-student');
+  document.getElementById('foto-prev').innerHTML='<div class="foto-placeholder">👤</div><div class="foto-hint">Toca para subir foto (opcional)</div>';
+  document.getElementById('ms-foto').value='';
+  updAulas();openMod('mod-student');
 }
-
 function openEditStudent(id){
-  const s=students.find(x=>x.id===id);if(!s)return;
+  const s=ST.find(x=>x.id===id);if(!s)return;
   document.getElementById('mod-s-title').textContent='Editar Estudiante';
   document.getElementById('ms-id').value=s.id;
-  document.getElementById('ms-ap').value=s.apellido_paterno||'';
-  document.getElementById('ms-am').value=s.apellido_materno||'';
-  document.getElementById('ms-nom').value=s.nombres||'';
-  document.getElementById('ms-dni').value=s.dni||'';
-  document.getElementById('ms-nivel').value=s.nivel||'Inicial';
-  updAulas();
+  document.getElementById('ms-ap').value=s.apellido_paterno||'';document.getElementById('ms-am').value=s.apellido_materno||'';
+  document.getElementById('ms-nom').value=s.nombres||'';document.getElementById('ms-dni').value=s.dni||'';
+  document.getElementById('ms-nivel').value=s.nivel||'Inicial';updAulas();
   document.getElementById('ms-grado').value=s.grado||'';
-  const aulas=ESTRUCTURA[s.nivel].aulas[s.grado]||[];
-  document.getElementById('ms-aula').innerHTML=aulas.map(a=>`<option>${a}</option>`).join('');
-  document.getElementById('ms-aula').value=s.aula||'';
-  document.getElementById('ms-apod').value=s.apoderado||'';
-  document.getElementById('ms-tel').value=s.telefono||'';
-  document.getElementById('ms-api').value=s.apikey_callmebot||'';
-  openMod('mod-student');
+  const aulas=EST[s.nivel].a[s.grado]||[];document.getElementById('ms-aula').innerHTML=aulas.map(a=>`<option>${a}</option>`).join('');document.getElementById('ms-aula').value=s.aula||'';
+  document.getElementById('ms-apod').value=s.apoderado||'';document.getElementById('ms-tel').value=s.telefono||'';document.getElementById('ms-api').value=s.apikey_callmebot||'';
+  if(s.foto_url)document.getElementById('foto-prev').innerHTML=`<img src="${s.foto_url}" class="foto-preview"><div class="foto-hint">Toca para cambiar</div>`;
+  else document.getElementById('foto-prev').innerHTML='<div class="foto-placeholder">👤</div><div class="foto-hint">Toca para subir foto (opcional)</div>';
+  document.getElementById('ms-foto').value='';openMod('mod-student');
 }
-
 async function saveStudent(){
-  const ap=document.getElementById('ms-ap').value.trim();
-  const nom=document.getElementById('ms-nom').value.trim();
+  const ap=document.getElementById('ms-ap').value.trim(),nom=document.getElementById('ms-nom').value.trim();
   if(!ap||!nom){toast('Apellido y nombre son obligatorios','err');return;}
-  const nivel=document.getElementById('ms-nivel').value;
-  const grado=nivel==='Secundaria'?'(sin grado)':document.getElementById('ms-grado').value;
-  const data={
-    apellido_paterno:ap,
-    apellido_materno:document.getElementById('ms-am').value.trim(),
-    nombres:nom,
-    dni:document.getElementById('ms-dni').value.trim(),
-    nivel,grado,
-    aula:document.getElementById('ms-aula').value,
-    apoderado:document.getElementById('ms-apod').value.trim(),
-    telefono:document.getElementById('ms-tel').value.trim(),
-    apikey_callmebot:document.getElementById('ms-api').value.trim(),
-    activo:true
-  };
-  const existingId=document.getElementById('ms-id').value;
-  const btn=document.getElementById('btn-save-student');
-  btn.disabled=true;btn.textContent='Guardando...';
-  if(existingId){
-    const {error}=await db.from('estudiantes').update(data).eq('id',existingId);
+  const nivel=document.getElementById('ms-nivel').value,grado=nivel==='Secundaria'?'(sin grado)':document.getElementById('ms-grado').value;
+  const btn=document.getElementById('btn-ss');btn.disabled=true;btn.textContent='Guardando...';
+  const eid=document.getElementById('ms-id').value,nid=eid||genId();
+  const fotoFile=document.getElementById('ms-foto').files[0];
+  let fotoUrl=eid?(ST.find(s=>s.id===eid)||{}).foto_url||null:null;
+  if(fotoFile)fotoUrl=await uploadFoto(fotoFile,nid);
+  const data={apellido_paterno:ap,apellido_materno:document.getElementById('ms-am').value.trim(),nombres:nom,dni:document.getElementById('ms-dni').value.trim(),nivel,grado,aula:document.getElementById('ms-aula').value,apoderado:document.getElementById('ms-apod').value.trim(),telefono:document.getElementById('ms-tel').value.trim(),apikey_callmebot:document.getElementById('ms-api').value.trim(),activo:true,foto_url:fotoUrl};
+  if(eid){
+    const{error}=await db.from('estudiantes').update(data).eq('id',eid);
     if(error){toast('Error: '+error.message,'err');btn.disabled=false;btn.textContent='Guardar';return;}
-    const i=students.findIndex(s=>s.id===existingId);
-    if(i>=0)students[i]={...students[i],...data};
-    toast('✅ Estudiante actualizado','ok');
-  } else {
-    data.id=genId();
-    const {error}=await db.from('estudiantes').insert([data]);
+    const i=ST.findIndex(s=>s.id===eid);if(i>=0)ST[i]={...ST[i],...data};toast('✅ Actualizado','ok');
+  }else{
+    data.id=nid;
+    const{error}=await db.from('estudiantes').insert([data]);
     if(error){toast('Error: '+error.message,'err');btn.disabled=false;btn.textContent='Guardar';return;}
-    students.push(data);
-    toast('✅ Estudiante agregado','ok');
+    ST.push(data);toast('✅ Alumno agregado','ok');
   }
-  btn.disabled=false;btn.textContent='Guardar';
-  closeMod('mod-student');renderStudents();
+  btn.disabled=false;btn.textContent='Guardar';closeMod('mod-student');renderStudents();
 }
 
-// =============================================
 // LISTA ESTUDIANTES
-// =============================================
 function renderStudents(){
   const q=(document.getElementById('s-search').value||'').toLowerCase();
-  const chips=document.getElementById('chips-row');
-  const filters=['all','Inicial','Primaria','Secundaria'];
-  chips.innerHTML=filters.map(f=>`<span class="chip ${activeChip===f?'on':''}" onclick="setChip('${f}')">${f==='all'?'Todos':f}</span>`).join('');
-  let filtered=students.filter(s=>{
-    const txt=(s.apellido_paterno+' '+s.apellido_materno+' '+s.nombres+' '+(s.dni||'')).toLowerCase();
-    return txt.includes(q)&&(activeChip==='all'||s.nivel===activeChip);
-  });
+  document.getElementById('chips-row').innerHTML=['all','Inicial','Primaria','Secundaria'].map(f=>`<span class="chip ${activeChip===f?'on':''}" onclick="setChip('${f}')">${f==='all'?'Todos':f}</span>`).join('');
+  let filtered=ST.filter(s=>{const txt=(s.apellido_paterno+' '+s.apellido_materno+' '+s.nombres+' '+(s.dni||'')).toLowerCase();return txt.includes(q)&&(activeChip==='all'||s.nivel===activeChip);});
   const list=document.getElementById('s-list');
   if(!filtered.length){list.innerHTML='<div class="empty">No se encontraron estudiantes</div>';return;}
   list.innerHTML=filtered.map(s=>{
-    const col=colorFor(s);
-    const att=attendance.find(a=>a.estudiante_id===s.id&&a.fecha===todayStr());
+    const att=AT.find(a=>a.estudiante_id===s.id&&a.fecha===today());
     const badge=att?(att.estado==='Tardanza'?'<span class="badge-t" style="font-size:.68rem;padding:.18rem .5rem">Tard.</span>':'<span class="badge-p" style="font-size:.68rem;padding:.18rem .5rem">Puntual</span>'):'';
-    return `<div class="s-card" onclick="viewStudent('${s.id}')">
-      <div class="s-av" style="background:${col}22;color:${col}">${initials(s)}</div>
-      <div style="flex:1;min-width:0">
-        <div class="s-nm">${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</div>
-        <div class="s-info">${s.nivel} · ${gradoAula(s)} · DNI: ${s.dni||'—'}</div>
-      </div>${badge}</div>`;
+    return`<div class="s-card" onclick="viewStudent('${s.id}')"><div style="flex-shrink:0">${av(s,44)}</div><div style="flex:1;min-width:0"><div class="s-nm">${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</div><div class="s-info">${s.nivel} · ${ga(s)} · DNI: ${s.dni||'—'}</div></div>${badge}</div>`;
   }).join('');
 }
-function setChip(f){activeChip=f;renderStudents()}
+function setChip(f){activeChip=f;renderStudents();}
 
 function viewStudent(id){
-  const s=students.find(x=>x.id===id);if(!s)return;
-  const col=colorFor(s);
+  const s=ST.find(x=>x.id===id);if(!s)return;
+  const c=col(s);
   document.getElementById('mod-view-body').innerHTML=`
     <div style="text-align:center;margin-bottom:1rem">
-      <div style="width:62px;height:62px;border-radius:50%;background:${col}22;color:${col};display:inline-flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:900;margin-bottom:.6rem">${initials(s)}</div>
-      <div style="font-size:1rem;font-weight:800;color:#f1f5f9">${fullName(s)}</div>
-      <div style="font-size:.75rem;color:#64748b;margin-top:.1rem">${s.nivel} — ${gradoAula(s)}</div>
+      ${s.foto_url?`<img src="${s.foto_url}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #38bdf8;margin-bottom:.65rem">`:`<div style="width:80px;height:80px;border-radius:50%;background:${c}22;color:${c};display:inline-flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;margin-bottom:.65rem">${ini(s)}</div>`}
+      <div style="font-size:1rem;font-weight:800;color:#f1f5f9">${fn(s)}</div>
+      <div style="font-size:.75rem;color:#64748b;margin-top:.1rem">${s.nivel} — ${ga(s)}</div>
     </div>
     <div style="display:grid;gap:.4rem">
       <div class="r-cell"><div class="rc-l">DNI</div><div class="rc-v">${s.dni||'—'}</div></div>
@@ -948,18 +673,14 @@ function viewStudent(id){
       <div class="r-cell"><div class="rc-l">Apoderado</div><div class="rc-v">${s.apoderado||'—'}</div></div>
       <div class="r-cell"><div class="rc-l">Teléfono</div><div class="rc-v">${s.telefono||'—'}</div></div>
     </div>`;
-  const isDir=currentUser&&currentUser.rol==='director';
-  document.getElementById('mod-view-foot').innerHTML=
-    (isDir?`<button class="btn-cancel" onclick="closeMod('mod-view');openEditStudent('${s.id}')">✏️ Editar</button>`:'')
-    +`<button class="btn-save" onclick="closeMod('mod-view');showQR('${s.id}')">📱 Ver QR</button>`;
+  const isDir=CU&&CU.rol==='director';
+  document.getElementById('mod-view-foot').innerHTML=(isDir?`<button class="btn-cancel" onclick="closeMod('mod-view');openEditStudent('${s.id}')">✏️ Editar</button>`:'')+`<button class="btn-save" onclick="closeMod('mod-view');showQR('${s.id}')">📱 Ver QR</button>`;
   openMod('mod-view');
 }
 
-// =============================================
 // QR
-// =============================================
 function showQR(id){
-  const s=students.find(x=>x.id===id);if(!s)return;
+  const s=ST.find(x=>x.id===id);if(!s)return;
   document.getElementById('mod-qr-title').textContent='QR — '+s.nombres+' '+s.apellido_paterno;
   document.getElementById('qr-sub').textContent=s.id;
   const qrd=document.getElementById('qrcode');qrd.innerHTML='';
@@ -967,142 +688,153 @@ function showQR(id){
   openMod('mod-qr');
 }
 function printQR(){
-  const canvas=document.querySelector('#qrcode canvas');
-  if(!canvas){toast('Genera el QR primero','err');return;}
-  const id=document.getElementById('qr-sub').textContent;
-  const s=students.find(x=>x.id===id);
+  const canvas=document.querySelector('#qrcode canvas');if(!canvas){toast('Genera el QR primero','err');return;}
+  const id=document.getElementById('qr-sub').textContent,s=ST.find(x=>x.id===id);
+  const fotoH=s&&s.foto_url?`<img src="${s.foto_url}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #333;margin-bottom:.5rem"><br>`:'';
   const w=window.open('','_blank');
-  w.document.write(`<html><body style="text-align:center;font-family:sans-serif;padding:2rem">
-    <h2 style="margin:0 0 .3rem">${s?fullName(s):''}</h2>
-    <p style="color:#666;margin:0 0 1rem;font-size:.9rem">${s?s.nivel+' — '+gradoAula(s):''}</p>
-    <img src="${canvas.toDataURL()}" style="width:200px;height:200px"><br>
-    <p style="font-family:monospace;font-size:.65rem;color:#aaa;margin-top:.4rem">${id}</p>
-    <script>window.onload=()=>window.print()<\/script>
-  </body></html>`);
+  w.document.write(`<html><body style="text-align:center;font-family:sans-serif;padding:2rem">${fotoH}<h2 style="margin:0 0 .3rem">${s?fn(s):''}</h2><p style="color:#666;margin:0 0 1rem;font-size:.9rem">${s?s.nivel+' — '+ga(s):''}</p><img src="${canvas.toDataURL()}" style="width:200px;height:200px"><br><p style="font-family:monospace;font-size:.65rem;color:#aaa;margin-top:.4rem">${id}</p><script>window.onload=()=>window.print()<\/script></body></html>`);
 }
 
-// =============================================
-// TABLA ASISTENCIAS
-// =============================================
+// ASISTENCIAS TABLE
 async function renderAtt(){
-  const fecha=document.getElementById('att-date').value;
-  const nivel=document.getElementById('att-nivel').value;
+  const fecha=document.getElementById('att-date').value,nivel=document.getElementById('att-nivel').value;
   const tbody=document.getElementById('att-tbody');
   tbody.innerHTML='<tr><td colspan="5"><div class="loader"><div class="spin"></div> Cargando...</div></td></tr>';
   let q=db.from('asistencias').select('*').order('created_at',{ascending:false});
   if(fecha)q=q.eq('fecha',fecha);
-  const {data,error}=await q;
-  if(error){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#f87171">Error al cargar</td></tr>';return;}
+  const{data,error}=await q;
+  if(error){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:#f87171">Error</td></tr>';return;}
   let rows=data||[];
-  if(nivel){const ids=students.filter(s=>s.nivel===nivel).map(s=>s.id);rows=rows.filter(a=>ids.includes(a.estudiante_id));}
+  if(nivel){const ids=ST.filter(s=>s.nivel===nivel).map(s=>s.id);rows=rows.filter(a=>ids.includes(a.estudiante_id));}
   if(!rows.length){tbody.innerHTML='<tr><td colspan="5" class="empty">Sin registros</td></tr>';return;}
-  tbody.innerHTML=rows.map(a=>{
-    const s=students.find(x=>x.id===a.estudiante_id)||{apellido_paterno:'?',apellido_materno:'',nombres:'?',nivel:'?',grado:'?',aula:'?'};
-    return `<tr><td>${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</td><td>${s.nivel}</td><td>${gradoAula(s)}</td><td>${a.hora}</td>
-    <td><span class="${a.estado==='Tardanza'?'badge-t':'badge-p'}" style="font-size:.7rem;padding:.2rem .5rem">${a.estado}</span></td></tr>`;
-  }).join('');
+  tbody.innerHTML=rows.map(a=>{const s=ST.find(x=>x.id===a.estudiante_id)||{apellido_paterno:'?',apellido_materno:'',nombres:'?',nivel:'?',grado:'?',aula:'?'};return`<tr><td>${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</td><td>${s.nivel}</td><td>${ga(s)}</td><td>${a.hora}</td><td><span class="${a.estado==='Tardanza'?'badge-t':'badge-p'}" style="font-size:.7rem;padding:.2rem .5rem">${a.estado}</span></td></tr>`;}).join('');
 }
 
-// =============================================
 // STATS
-// =============================================
 async function renderStats(){
-  const today=todayStr();
-  const hoy=attendance.filter(a=>a.fecha===today).length;
-  const total=students.length;
-  const tard=attendance.filter(a=>a.estado==='Tardanza').length;
-  const punt=attendance.filter(a=>a.estado==='Puntual').length;
-  document.getElementById('stat-grid').innerHTML=`
-    <div class="stat-c"><div class="sl">Total Alumnos</div><div class="sv">${total}</div><div class="ss">Matriculados</div></div>
-    <div class="stat-c"><div class="sl">Hoy presentes</div><div class="sv">${hoy}</div><div class="ss">${total?Math.round(hoy/total*100):0}% del total</div></div>
-    <div class="stat-c"><div class="sl">Puntuales</div><div class="sv" style="color:#22c55e">${punt}</div><div class="ss">Total histórico</div></div>
-    <div class="stat-c"><div class="sl">Tardanzas</div><div class="sv" style="color:#ef4444">${tard}</div><div class="ss">Total histórico</div></div>`;
-  document.getElementById('stats-tbody').innerHTML=students.map(s=>{
-    const atts=attendance.filter(a=>a.estudiante_id===s.id);
-    const t=atts.filter(a=>a.estado==='Tardanza').length;
-    return `<tr><td>${s.apellido_paterno} ${s.nombres}</td><td>${s.nivel}</td><td>${atts.length}</td><td>${t}</td></tr>`;
+  const tod=today(),hoy=AT.filter(a=>a.fecha===tod).length,total=ST.length;
+  const tard=AT.filter(a=>a.estado==='Tardanza').length,punt=AT.filter(a=>a.estado==='Puntual').length;
+  document.getElementById('stat-grid').innerHTML=`<div class="stat-c"><div class="sl">Total Alumnos</div><div class="sv">${total}</div><div class="ss">Matriculados</div></div><div class="stat-c"><div class="sl">Hoy presentes</div><div class="sv">${hoy}</div><div class="ss">${total?Math.round(hoy/total*100):0}% del total</div></div><div class="stat-c"><div class="sl">Puntuales</div><div class="sv" style="color:#22c55e">${punt}</div><div class="ss">Histórico</div></div><div class="stat-c"><div class="sl">Tardanzas</div><div class="sv" style="color:#ef4444">${tard}</div><div class="ss">Histórico</div></div>`;
+  document.getElementById('stats-tbody').innerHTML=ST.map(s=>{const atts=AT.filter(a=>a.estudiante_id===s.id);const t=atts.filter(a=>a.estado==='Tardanza').length;return`<tr><td>${s.apellido_paterno} ${s.nombres}</td><td>${s.nivel}</td><td>${atts.length}</td><td>${t}</td></tr>`;}).join('');
+}
+
+// REPORTE INASISTENCIAS
+async function renderReporte(){
+  const desde=document.getElementById('rep-desde').value,hasta=document.getElementById('rep-hasta').value,nivel=document.getElementById('rep-nivel').value;
+  const list=document.getElementById('rep-list');
+  list.innerHTML='<div class="loader"><div class="spin"></div> Calculando...</div>';
+  let q=db.from('asistencias').select('*');
+  if(desde)q=q.gte('fecha',desde);if(hasta)q=q.lte('fecha',hasta);
+  const{data:attD,error}=await q;
+  if(error){list.innerHTML='<div class="empty">Error al cargar</div>';return;}
+  const d1=desde?new Date(desde+'T00:00:00'):new Date(),d2=hasta?new Date(hasta+'T00:00:00'):new Date();
+  let dias=0;for(let d=new Date(d1);d<=d2;d.setDate(d.getDate()+1)){const dw=d.getDay();if(dw!==0&&dw!==6)dias++;}
+  if(dias===0)dias=1;
+  let filtered=ST;if(nivel)filtered=filtered.filter(s=>s.nivel===nivel);
+  const rep=filtered.map(s=>{
+    const attS=(attD||[]).filter(a=>a.estudiante_id===s.id);
+    const asist=attS.length,tard=attS.filter(a=>a.estado==='Tardanza').length;
+    const inasist=Math.max(0,dias-asist),pct=Math.round(asist/dias*100);
+    return{s,asist,tard,inasist,pct,dias};
+  }).sort((a,b)=>a.pct-b.pct);
+  if(!rep.length){list.innerHTML='<div class="empty">Sin datos para el período</div>';return;}
+  list.innerHTML=rep.map(({s,asist,tard,inasist,pct})=>{
+    const color=pct>=90?'#22c55e':pct>=75?'#f59e0b':'#ef4444';
+    const dotC=pct>=90?'verde':pct>=75?'amarillo':'rojo';
+    const alerta=pct<75?'<span style="font-size:.7rem;background:#7f1d1d;color:#fca5a5;border-radius:4px;padding:.15rem .4rem;margin-left:.4rem">CRÍTICO</span>':pct<90?'<span style="font-size:.7rem;background:#78350f;color:#fde68a;border-radius:4px;padding:.15rem .4rem;margin-left:.4rem">EN RIESGO</span>':'';
+    return`<div class="sem-card"><div style="flex-shrink:0">${av(s,44)}</div><div style="flex:1;min-width:0"><div class="sem-nm">${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}${alerta}</div><div class="sem-info">${s.nivel} · ${ga(s)}</div><div style="font-size:.7rem;color:#64748b;margin-top:.2rem">✅ ${asist} · ⏰ ${tard} tard. · ❌ ${inasist} faltas</div></div><div class="sem-stats"><div class="sem-pct" style="color:${color}">${pct}%</div><div class="sem-bar"><div class="sem-bar-fill" style="width:${pct}%;background:${color}"></div></div><div class="sem-det">${asist}/${dias} días</div></div><div class="sem-dot ${dotC}"></div></div>`;
   }).join('');
 }
 
-// =============================================
-// EXPORT
-// =============================================
-async function exportExcel(){
-  const {data}=await db.from('asistencias').select('*').order('fecha',{ascending:false});
-  if(!data||!data.length){toast('No hay registros para exportar','err');return;}
-  const rows=[['Apellido Paterno','Apellido Materno','Nombres','DNI','Nivel','Grado','Aula','Fecha','Hora','Estado','Registrado Por']];
-  data.forEach(a=>{
-    const s=students.find(x=>x.id===a.estudiante_id)||{};
-    rows.push([s.apellido_paterno||'',s.apellido_materno||'',s.nombres||'',s.dni||'',s.nivel||'',s.grado==='(sin grado)'?'—':s.grado||'',s.aula||'',a.fecha,a.hora,a.estado,a.registrado_por||'']);
-  });
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),'Asistencia');
-  XLSX.writeFile(wb,'asistencia_'+todayStr()+'.xlsx');
-  toast('📥 Excel exportado','ok');
+async function exportRepExcel(){
+  const desde=document.getElementById('rep-desde').value,hasta=document.getElementById('rep-hasta').value;
+  let q=db.from('asistencias').select('*');if(desde)q=q.gte('fecha',desde);if(hasta)q=q.lte('fecha',hasta);
+  const{data:attD}=await q;
+  const d1=desde?new Date(desde+'T00:00:00'):new Date(),d2=hasta?new Date(hasta+'T00:00:00'):new Date();
+  let dias=0;for(let d=new Date(d1);d<=d2;d.setDate(d.getDate()+1)){const dw=d.getDay();if(dw!==0&&dw!==6)dias++;}if(dias===0)dias=1;
+  const rows=[['Apellidos','Nombres','Nivel','Aula','Días Hábiles','Asistencias','Tardanzas','Inasistencias','% Asistencia','Estado']];
+  ST.forEach(s=>{const attS=(attD||[]).filter(a=>a.estudiante_id===s.id);const asist=attS.length,tard=attS.filter(a=>a.estado==='Tardanza').length,inasist=Math.max(0,dias-asist),pct=Math.round(asist/dias*100);rows.push([s.apellido_paterno+' '+s.apellido_materno,s.nombres,s.nivel,ga(s),dias,asist,tard,inasist,pct+'%',pct>=90?'Normal':pct>=75?'En riesgo':'Crítico']);});
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),'Inasistencias');XLSX.writeFile(wb,'inasistencias_'+today()+'.xlsx');toast('📥 Excel exportado','ok');
 }
 
-async function exportPDF(){
-  const {data}=await db.from('asistencias').select('*').order('fecha',{ascending:false});
-  if(!data||!data.length){toast('No hay registros para exportar','err');return;}
-  const rows=data.map(a=>{
-    const s=students.find(x=>x.id===a.estudiante_id)||{apellido_paterno:'?',apellido_materno:'',nombres:'?',nivel:'?',aula:'?'};
-    return `<tr><td>${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</td><td>${s.nivel}</td><td>${gradoAula(s)}</td><td>${a.fecha}</td><td>${a.hora}</td><td style="color:${a.estado==='Tardanza'?'#c0392b':'#27ae60'};font-weight:700">${a.estado}</td></tr>`;
-  }).join('');
+async function exportRepPDF(){
+  const desde=document.getElementById('rep-desde').value,hasta=document.getElementById('rep-hasta').value;
+  let q=db.from('asistencias').select('*');if(desde)q=q.gte('fecha',desde);if(hasta)q=q.lte('fecha',hasta);
+  const{data:attD}=await q;
+  const d1=desde?new Date(desde+'T00:00:00'):new Date(),d2=hasta?new Date(hasta+'T00:00:00'):new Date();
+  let dias=0;for(let d=new Date(d1);d<=d2;d.setDate(d.getDate()+1)){const dw=d.getDay();if(dw!==0&&dw!==6)dias++;}if(dias===0)dias=1;
+  const rows=ST.map(s=>{const attS=(attD||[]).filter(a=>a.estudiante_id===s.id);const asist=attS.length,tard=attS.filter(a=>a.estado==='Tardanza').length,inasist=Math.max(0,dias-asist),pct=Math.round(asist/dias*100);const color=pct>=90?'#27ae60':pct>=75?'#d68910':'#c0392b';return`<tr><td>${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</td><td>${s.nivel}</td><td>${ga(s)}</td><td>${asist}</td><td>${tard}</td><td>${inasist}</td><td style="color:${color};font-weight:700">${pct}%</td></tr>`;}).join('');
   const w=window.open('','_blank');
-  w.document.write(`<html><head><title>Asistencia</title><style>body{font-family:sans-serif;padding:1.5rem}h2{margin:0 0 .2rem;font-size:1.1rem}p{color:#666;font-size:.8rem;margin:0 0 .75rem}table{width:100%;border-collapse:collapse;font-size:.8rem}th{background:#1a1a2e;color:#fff;padding:.5rem;text-align:left}td{padding:.4rem .5rem;border-bottom:1px solid #eee}</style></head>
-  <body><h2>I.E. Nueva Esperanza — Registro de Asistencia</h2><p>Generado: ${fmtDate(new Date())}</p>
-  <table><thead><tr><th>Alumno</th><th>Nivel</th><th>Aula</th><th>Fecha</th><th>Hora</th><th>Estado</th></tr></thead><tbody>${rows}</tbody></table>
-  <script>window.onload=()=>window.print()<\/script></body></html>`);
-  toast('🖨️ PDF listo para imprimir','ok');
+  w.document.write(`<html><head><title>Inasistencias</title><style>body{font-family:sans-serif;padding:1.5rem}h2{margin:0 0 .2rem;font-size:1.1rem}p{color:#666;font-size:.8rem;margin:0 0 .75rem}table{width:100%;border-collapse:collapse;font-size:.78rem}th{background:#1a1a2e;color:#fff;padding:.5rem;text-align:left}td{padding:.4rem .5rem;border-bottom:1px solid #eee}</style></head><body><h2>I.E. Nueva Esperanza — Reporte de Inasistencias</h2><p>Período: ${desde||'—'} al ${hasta||'—'} · Días hábiles: ${dias}</p><table><thead><tr><th>Alumno</th><th>Nivel</th><th>Aula</th><th>Asist.</th><th>Tard.</th><th>Faltas</th><th>%</th></tr></thead><tbody>${rows}</tbody></table><script>window.onload=()=>window.print()<\/script></body></html>`);
+  toast('🖨️ PDF listo','ok');
 }
 
-// =============================================
-// USUARIOS
-// =============================================
+// EXPORT GENERAL
+async function exportExcel(){
+  const{data}=await db.from('asistencias').select('*').order('fecha',{ascending:false});
+  if(!data||!data.length){toast('No hay registros','err');return;}
+  const rows=[['Apellido Paterno','Apellido Materno','Nombres','DNI','Nivel','Grado','Aula','Fecha','Hora','Estado','Registrado Por']];
+  data.forEach(a=>{const s=ST.find(x=>x.id===a.estudiante_id)||{};rows.push([s.apellido_paterno||'',s.apellido_materno||'',s.nombres||'',s.dni||'',s.nivel||'',s.grado==='(sin grado)'?'—':s.grado||'',s.aula||'',a.fecha,a.hora,a.estado,a.registrado_por||'']);});
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),'Asistencia');XLSX.writeFile(wb,'asistencia_'+today()+'.xlsx');toast('📥 Excel exportado','ok');
+}
+async function exportPDF(){
+  const{data}=await db.from('asistencias').select('*').order('fecha',{ascending:false});
+  if(!data||!data.length){toast('No hay registros','err');return;}
+  const rows=data.map(a=>{const s=ST.find(x=>x.id===a.estudiante_id)||{apellido_paterno:'?',apellido_materno:'',nombres:'?',nivel:'?',aula:'?'};return`<tr><td>${s.apellido_paterno} ${s.apellido_materno}, ${s.nombres}</td><td>${s.nivel}</td><td>${ga(s)}</td><td>${a.fecha}</td><td>${a.hora}</td><td style="color:${a.estado==='Tardanza'?'#c0392b':'#27ae60'};font-weight:700">${a.estado}</td></tr>`;}).join('');
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Asistencia</title><style>body{font-family:sans-serif;padding:1.5rem}h2{margin:0 0 .2rem}p{color:#666;font-size:.8rem;margin:0 0 .75rem}table{width:100%;border-collapse:collapse;font-size:.8rem}th{background:#1a1a2e;color:#fff;padding:.5rem;text-align:left}td{padding:.4rem .5rem;border-bottom:1px solid #eee}</style></head><body><h2>I.E. Nueva Esperanza — Registro de Asistencia</h2><p>Generado: ${fmtD(new Date())}</p><table><thead><tr><th>Alumno</th><th>Nivel</th><th>Aula</th><th>Fecha</th><th>Hora</th><th>Estado</th></tr></thead><tbody>${rows}</tbody></table><script>window.onload=()=>window.print()<\/script></body></html>`);
+  toast('🖨️ PDF listo','ok');
+}
+
+// USUARIOS + RESETEO
 function renderUsers(){
-  document.getElementById('u-list').innerHTML=usuarios.map(u=>`
-    <div class="u-card">
-      <div class="u-av">${(u.nombre||'?')[0]}</div>
-      <div style="flex:1">
-        <div style="font-size:.88rem;font-weight:700;color:#f1f5f9">${u.nombre}</div>
-        <div style="font-size:.72rem;color:#64748b">@${u.usuario} · ${u.rol==='director'?'Director':'Tutor/Docente'}</div>
-      </div>
-      ${u.usuario!=='director'?`<button class="btn-out" onclick="deleteUser('${u.id}')" style="color:#f87171;border-color:#7f1d1d;font-size:.75rem">Eliminar</button>`:'<span style="font-size:.7rem;color:#334155">Principal</span>'}
-    </div>`).join('');
+  document.getElementById('u-list').innerHTML=US.map(u=>`<div class="u-card"><div class="u-av">${(u.nombre||'?')[0]}</div><div style="flex:1"><div style="font-size:.88rem;font-weight:700;color:#f1f5f9">${u.nombre}</div><div style="font-size:.72rem;color:#64748b">@${u.usuario} · ${u.rol==='director'?'Director':'Tutor'}</div></div><div style="display:flex;gap:.4rem;flex-shrink:0"><button class="btn-out" style="font-size:.72rem;color:#38bdf8;border-color:#1e40af55" onclick="openResetPass('${u.id}','${u.nombre}')">🔑 Contraseña</button>${u.usuario!=='director'?`<button class="btn-out" style="font-size:.72rem;color:#f87171;border-color:#7f1d1d" onclick="delUser('${u.id}')">Eliminar</button>`:''}</div></div>`).join('');
 }
-
-function openAddUser(){['mu-name','mu-user','mu-pass'].forEach(i=>document.getElementById(i).value='');openMod('mod-user')}
-
+function openAddUser(){
+  document.getElementById('mod-u-title').textContent='Agregar Usuario';
+  document.getElementById('mu-id').value='';
+  ['mu-name','mu-user','mu-pass'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('mu-user').readOnly=false;document.getElementById('mu-name').readOnly=false;
+  openMod('mod-user');
+}
+function openResetPass(id,nombre){
+  document.getElementById('mod-u-title').textContent='🔑 Resetear contraseña — '+nombre;
+  document.getElementById('mu-id').value=id;
+  document.getElementById('mu-name').value=nombre;document.getElementById('mu-name').readOnly=true;
+  document.getElementById('mu-user').value='';document.getElementById('mu-user').readOnly=true;
+  document.getElementById('mu-pass').value='';
+  openMod('mod-user');
+}
 async function saveUser(){
-  const name=document.getElementById('mu-name').value.trim();
-  const user=document.getElementById('mu-user').value.trim();
-  const pass=document.getElementById('mu-pass').value;
-  const rol=document.getElementById('mu-rol').value;
-  if(!name||!user||!pass){toast('Completa todos los campos','err');return;}
-  if(usuarios.find(u=>u.usuario===user)){toast('Ese usuario ya existe','err');return;}
-  const btn=document.getElementById('btn-save-user');
-  btn.disabled=true;btn.textContent='Creando...';
-  const {data,error}=await db.from('usuarios').insert([{nombre:name,usuario:user,password:pass,rol,activo:true}]).select().single();
-  if(error){toast('Error: '+error.message,'err');btn.disabled=false;btn.textContent='Crear Usuario';return;}
-  usuarios.push(data);
-  toast('✅ Usuario creado','ok');
-  btn.disabled=false;btn.textContent='Crear Usuario';
-  closeMod('mod-user');renderUsers();
+  const eid=document.getElementById('mu-id').value;
+  const btn=document.getElementById('btn-su');btn.disabled=true;btn.textContent='Guardando...';
+  if(eid){
+    const pass=document.getElementById('mu-pass').value;
+    if(!pass){toast('Ingresa la nueva contraseña','err');btn.disabled=false;btn.textContent='Guardar';return;}
+    const{error}=await db.from('usuarios').update({password:pass}).eq('id',eid);
+    if(error){toast('Error: '+error.message,'err');btn.disabled=false;btn.textContent='Guardar';return;}
+    const u=US.find(x=>x.id===eid);if(u)u.password=pass;
+    toast('✅ Contraseña actualizada correctamente','ok');
+  }else{
+    const name=document.getElementById('mu-name').value.trim(),user=document.getElementById('mu-user').value.trim(),pass=document.getElementById('mu-pass').value,rol=document.getElementById('mu-rol').value;
+    if(!name||!user||!pass){toast('Completa todos los campos','err');btn.disabled=false;btn.textContent='Guardar';return;}
+    if(US.find(u=>u.usuario===user)){toast('Ese usuario ya existe','err');btn.disabled=false;btn.textContent='Guardar';return;}
+    const{data,error}=await db.from('usuarios').insert([{nombre:name,usuario:user,password:pass,rol,activo:true}]).select().single();
+    if(error){toast('Error: '+error.message,'err');btn.disabled=false;btn.textContent='Guardar';return;}
+    US.push(data);toast('✅ Usuario creado','ok');
+  }
+  btn.disabled=false;btn.textContent='Guardar';closeMod('mod-user');renderUsers();
 }
-
-async function deleteUser(id){
+async function delUser(id){
   if(!confirm('¿Eliminar este usuario?'))return;
-  const {error}=await db.from('usuarios').update({activo:false}).eq('id',id);
+  const{error}=await db.from('usuarios').update({activo:false}).eq('id',id);
   if(error){toast('Error: '+error.message,'err');return;}
-  usuarios=usuarios.filter(u=>u.id!==id);
-  renderUsers();toast('Usuario eliminado','info');
+  US=US.filter(u=>u.id!==id);renderUsers();toast('Usuario eliminado','info');
 }
 
-// =============================================
 // INIT
-// =============================================
 updAulas();
-document.getElementById('att-date').value=todayStr();
+document.getElementById('att-date').value=today();
 init();
 </script>
 </body>
