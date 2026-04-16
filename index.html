@@ -674,8 +674,23 @@ function viewStudent(id){
       <div class="r-cell"><div class="rc-l">Teléfono</div><div class="rc-v">${s.telefono||'—'}</div></div>
     </div>`;
   const isDir=CU&&CU.rol==='director';
-  document.getElementById('mod-view-foot').innerHTML=(isDir?`<button class="btn-cancel" onclick="closeMod('mod-view');openEditStudent('${s.id}')">✏️ Editar</button>`:'')+`<button class="btn-save" onclick="closeMod('mod-view');showQR('${s.id}')">📱 Ver QR</button>`;
+  document.getElementById('mod-view-foot').innerHTML=
+    (isDir?`<button class="btn-cancel" style="color:#f87171;border-color:#7f1d1d" onclick="deleteStudent('${s.id}')">🗑️ Eliminar</button>`:'')+
+    (isDir?`<button class="btn-cancel" onclick="closeMod('mod-view');openEditStudent('${s.id}')">✏️ Editar</button>`:'')+
+    `<button class="btn-save" onclick="closeMod('mod-view');showQR('${s.id}')">📱 Ver QR</button>`;
   openMod('mod-view');
+}
+
+// ELIMINAR ESTUDIANTE
+async function deleteStudent(id){
+  const s=ST.find(x=>x.id===id);if(!s)return;
+  if(!confirm('¿Eliminar a '+s.nombres+' '+s.apellido_paterno+'?\nEsta acción no se puede deshacer.'))return;
+  closeMod('mod-view');
+  const{error}=await db.from('estudiantes').update({activo:false}).eq('id',id);
+  if(error){toast('Error al eliminar: '+error.message,'err');return;}
+  ST=ST.filter(x=>x.id!==id);
+  renderStudents();
+  toast('🗑️ Estudiante eliminado correctamente','info');
 }
 
 // QR
